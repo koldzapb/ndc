@@ -1,0 +1,197 @@
+{% if (page.mainfooter1==true)  %}
+
+    <div class="latest-bonus-wrapper">
+
+        <div class="container">
+            <h3>Latest No Deposit Casino Bonuses</h3>
+            <div class="latest-bonus-slider">
+                {% for bonus in latestbonuses %}
+                <div itemscope itemtype="http://schema.org/Offer">
+                    <meta itemprop="url" content='{{ absolute_url(path("casino-review",{"id":bonus.casino.id,"casinoname":bonus.casino.casinoname|replace({" ":"-" })})) }}' />
+                    <meta itemprop="name" content="{{ bonus.bonustype.name }} Bonus" />
+                    <div class="latest-bonus-item">
+                        <div class="latest-bonus-top">
+                            <span class="box-new">New!</span>
+                            <span class="flag">
+                                <img src='{{ country.imgSrc }}' alt="{{ country.name }}" width="16" height="11">
+                            </span>
+                            <a href="/casino-review/{{ bonus.casino.id }}/{{ bonus.casino.casinoname|replace({' ':'-' }) }}">
+                                <img class="latest-bonus-logo lazyload" src="{{asset(('img/lazy-115.png'))}}" data-original="{{ asset(bonus.casino.casinologo) }}" alt="{{ bonus.casino.casinoname }}" width="115" height="115" />
+                            </a>
+                            <p class="latest-bonus-comments">
+                                {% if (bonus.casino.posts|length>0) %}
+                                    <span class="comments"><span class="icon"></span>{{ bonus.casino.posts|length }} {% if bonus.casino.posts|length > 1 %}Comments{% else %}Comment{% endif %}</span>
+                                {% endif %}
+
+                                {% if (bonus.casino.likes|length>0) %}
+                                    <span class="likes"><span class="icon"></span>{{ bonus.casino.likes|length }} {% if bonus.casino.likes|length > 1 %}Likes{% else %}Like{% endif %}</span>
+                                {% endif %}
+                            </p>
+
+                        </div>
+
+                        <div class="latest-bonus-bottom" itemscope itemprop="seller" itemtype="http://schema.org/Organization">
+                            <meta itemprop="name" content="{{ bonus.casino.casinoname }}" />
+                            <meta itemprop="url" content="{{ absolute_url(path('visit_casino',{id:bonus.casino.id})) }}" />
+                            <div class="casino-bonus">
+                                <span class="casino-bonus-amount">{{ bonus.symbol }}{{ bonus.maxbonus|split('.')|first }}</span>
+                                <p class="casino-bonus-name">
+                                        {{ bonus.bonustype.name }}
+                                </p>
+                                {% if bonus.code|length > 0 %}
+                                    <p class="casino-bonus-code">Code:
+                                        <span>{{ bonus.code|slice(0,13) }}</span>
+                                        <span class="code_hover tooltip-btn tooltip-hover" data-toggle="tooltip" data-placement="top" title="Copy to Clipboard">
+                                            <span class="copy-code tooltip-btn" data-toggle="tooltip" data-placement="top" title="Code copied to Clipboard" data-trigger="manual">{{ bonus.code }}</span>
+                                        </span>
+                                    </p>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <a href="" class="btn-like tooltip-btn" data-bonus="{{ bonus.id }}"  data-toggle="tooltip" data-placement="top" title="Like" aria-label="Like" onclick="return false;"></a>
+                                <a href="/casino-review/{{ bonus.casino.id }}/{{ bonus.casino.casinoname|replace({' ':'-' }) }}" class="btn-review tooltip-btn" data-toggle="tooltip" data-placement="top" title="Read Review" aria-label="Read Review"></a>
+                            </div>
+                        </div>
+                        <a class="btn btn-primary" href="{{ path('visit_casino',{id:bonus.casino.id}) }}" title="{{ bonus.casino.casinoname }}" rel="noopener nofollow"  target="_blank">
+                            {% if country.name=='United Kingdom' %}PLAY{% else %}PLAY NOW{% endif %}
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div><!--/.latest-bonus-->
+        </div>
+    </div><!--/#footer1-->
+{% endif %}
+
+{% if (page.mainfooter2==true) %}
+    <div class="footer">
+        <div class="container">
+            <div class="footer-top">
+
+                <ul class="footer-social">
+                    <li>
+                        <a class="facebook" href="{{ socialregister.loginUrl }}" aria-label="facebook">
+                            <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="twitter" href="{{ socialregister.url }}" aria-label="twitter">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                        </a>
+                    </li>
+
+                    <li>
+                        <div class="g-signin2 s-gplus" {% if not is_granted('IS_AUTHENTICATED_FULLY') %}data-onsuccess="onSignIn"{% endif %}></div>
+                    </li>
+                </ul>
+
+
+                <nav id="menu-footer">
+                    <ul>
+                        <li>
+                            <a href="{{ path('index') }}">No Deposit Casinos</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ path('casinos') }}">All Casinos</a>
+                        </li>
+
+                        <li>
+                            <a href="/gamblinghelp">Gambling Help</a>
+                        </li>
+                    </ul>
+                </nav>
+
+
+                <a class="powered-by" href="http://lcb.org/" rel="noopener {% if(page.navigation is defined and page.navigation!='Index') %}nofollow{% endif %}" target="_blank">Powered by <span></span></a>
+
+            </div>
+
+
+            <div class="footer-bottom">
+                <div class="footer-bottom-links">
+                    <a href="{{ path('general_pages',{"slug":'privacy'}) }}">Privacy Policy</a>
+                    <a href="{{ path('general_pages',{"slug":'disclaimer'}) }}">Disclaimer</a>
+                    <a href="{{ path('contact') }}">Contact Us</a>
+                    <a href="{{ path('general_pages',{"slug":'terms-and-conditions'}) }}">Terms and Conditions</a>
+                </div>
+                <div class="footer-logos">
+                    <a  href="http://www.gamcare.org.uk/" rel="noopener {% if(page.navigation is defined and page.navigation!='Index') %}nofollow{% endif %}" target="_blank">
+                        <img width="40" height="43" class="lazyload" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQIHWO4/+INAAVdArRD1D4LAAAAAElFTkSuQmCC"
+     data-original="{{ asset('img/FooterImages/gamecare_woo.png') }}" alt="gamcare">
+                    </a>
+
+                    <a href="{{ path('general_pages',{"slug":'disclaimer'}) }}">
+                        <img width="40" height="40" class="lazyload" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQIHWO4/+INAAVdArRD1D4LAAAAAElFTkSuQmCC"
+     data-original="{{ asset('img/FooterImages/18_woo.png') }}" alt="disclaimer">
+                    </a>
+
+                    <a  href="https://www.begambleaware.org/" rel="noopener {% if(page.navigation is defined and page.navigation!='Index') %}nofollow{% endif %}" target="_blank">
+                        <img width="40" height="40" class="lazyload" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQIHWO4/+INAAVdArRD1D4LAAAAAElFTkSuQmCC"
+     data-original="{{ asset('img/FooterImages/begambleaware_logo.png') }}" alt="beGambleAware">
+                    </a>
+                </div>
+                <div id="copyright">NoDepositCasino  &copy; 2012- {{ "now"|date("Y") }}. All Rights Reserved.</div>
+                <div class="partner-website"><a href="http://www.nodepositbingo.co.uk/" rel="noopener {% if(page.navigation is defined and page.navigation!='Index') %}nofollow{% endif %}" target="_blank">Partner Website <span></span></a></div>
+
+            </div>
+        </div>
+    </div><!--/#footer-->
+
+{% endif %}
+
+{{ render(controller('App\\Controller\\TemplateController::userPopups'))}}
+
+<div id="cookie-bar">
+    <p>No Deposit Casino uses cookies, this enables us to provide you with a personalised experience
+        <a class="cookie_bar_more_info" href="{{ path('general_pages',{"slug":'privacy'}) }}"> More info</a>
+        <button class="hide-cookie-bar btn btn-primary">Got it!</button>
+    </p>
+</div>
+
+
+<div id="subscription" class="fadeIn animate" >
+    <span id="close_subscription_popup"  onclick="return false;"></span>
+    <div class="subscribe-heading">
+        <img src="{{ asset('img/subscribe.png') }}" alt="Subscribe" width="107" height="76" />
+        <span> Get The Latest Posts Delivered Directly To Your Inbox! </span>
+    </div>
+    <div class="subscribeDescriptionBox">
+        <p class="subscribeDescription"> Join Over 10,000 B2B Marketers Who Get The Latest Posts On Content Marketing and Growth Hacking Delivered Directly To Their Inbox. </p>
+    </div>
+    <div class="form-group">
+        <input class="narrow" id="newsletter_subscription_only" type="email" required name="newsletter_subscription_email" aria-label="Email Address" placeholder="Email Address">
+        <a id="newsletter_subscribe" href="" class="btn btn-primary" onclick="return false">Subscribe</a>
+    </div>
+    <p class="form-error" id="newsletter_subscribe_error"></p>
+    <div class="form-group-checkbox">
+        <input id="dont_show_again" type="checkbox" name="dontshow">
+        <label for="dont_show_again">Don't show this again.</label>
+    </div>
+</div>
+
+<div id="ouibounce-modal">
+  <div class="underlay"></div>
+  <div class="modal-inner">
+    <div class="modal-title">
+      <h3>Be Informed!</h3>
+    </div>
+
+    <div class="modal-body">
+      <p>We send out FREE weekly emails and instant alerts detailing NEW No Deposits and exclusive freerolls many of which are exclusive to NDC, leave your email to be included!</p>
+
+      <form id="ouisubform">
+        <input id="ouibounce-modal-email" type="text" aria-label="your@email.com" placeholder="your@email.com">
+        <input id="ouibounce-modal-subscription" type="submit"  value="Subscribe">
+      </form>
+        <p style="text-align: center;" id="oui-modal-error"></p>
+    </div>
+
+    <div class="ouibounce-footer">
+      <p>no thanks</p>
+    </div>
+  </div>
+</div>
+
+<input id="copyText" type="text" tabindex='-1' aria-hidden='true'>

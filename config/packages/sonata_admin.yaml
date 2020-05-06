@@ -1,0 +1,75 @@
+sonata_admin:
+    title: 'NDC ADMIN'
+    dashboard:
+        groups:
+            app.admin.group.casino:
+                                label: Casino
+                                label_catalogue: App
+                                items:
+                                    - admin.casino
+            app.admin.group.articles:
+                                label: Articles and News
+                                label_catalogue: App
+                                items:
+                                    - admin.article
+                                    - admin.news
+                                    - admin.articlecategory
+            app.admin.group.bonuspages:
+                                label: Bonuses Pages
+                                label_catalogue: App
+                                items:
+                                    - admin.countrylist
+                                    - admin.softwareslist
+                                    - admin.gameslist
+                                    - admin.bonusvalue
+            app.admin.group.user:
+                                label: User
+                                label_catalogue: App
+                                items:
+                                    - admin.user
+            app.admin.group.mainpages:
+                                label: Main Pages
+                                label_catalogue: App
+                                items:
+                                    - admin.mainpage
+            app.admin.group.author:
+                                label: Author
+                                label_catalogue: App
+                                items:
+                                    - admin.author
+            app.admin.group.bonuses:
+                                label: Bonuses
+                                label_catalogue: App
+                                items:
+                                    - admin.bonus
+            app.admin.group.bonustypes:
+                                label: Bonus Types
+                                label_catalogue: App
+                                items:
+                                    - admin.bonustype
+            app.admin.group.other:
+                                label: Other
+                                label_catalogue: App
+                                items:
+                                    - admin.shortcode
+                                    - admin.currency
+                                    - admin.country
+                                    - admin.contactus
+
+
+        blocks:
+            - { type: sonata.admin.block.admin_list, position: left }
+
+    assets:
+        extra_stylesheets:
+            - 'assets/sonataadmin/admin.css'
+        extra_javascripts:
+            - 'assets/sonataadmin/admin.js'
+
+sonata_block:
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts:   [admin]
+        sonata.admin.block.search_result:
+            contexts:   [admin]
+        sonata.block.service.text:

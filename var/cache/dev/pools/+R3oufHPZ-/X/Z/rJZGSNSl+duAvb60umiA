@@ -1,0 +1,24 @@
+<?php //%255BApp%255CController%255CPostController%2523reply%255D%255B1%255D
+
+namespace Symfony\Component\VarExporter\Internal;
+
+return $getExpiry ? PHP_INT_MAX : Hydrator::hydrate(
+    $o = [
+        clone (Registry::$prototypes['Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Route'] ?? Registry::p('Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Route')),
+    ],
+    null,
+    [
+        'Symfony\\Component\\Routing\\Annotation\\Route' => [
+            'path' => [
+                '/reply',
+            ],
+            'name' => [
+                'reply',
+            ],
+        ],
+    ],
+    [
+        $o[0],
+    ],
+    []
+);

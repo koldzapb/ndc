@@ -1,0 +1,95 @@
+// Small tablets and large smartphones (landscape view)
+$screen-sm-min: 576px;
+
+// Small tablets (portrait view)
+$screen-md-min: 768px;
+
+// Tablets and small desktops
+$screen-lg-min: 992px;
+
+// Large tablets and desktops
+$screen-xl-min: 1200px;
+
+// Small devices
+@mixin sm($direction:'') {
+    @if ($direction == 'up') {
+       @media (min-width: #{$screen-sm-min}) {
+           @content;
+       }
+    } @else {
+       @media (max-width: #{$screen-sm-min - 1}) {
+           @content;
+       }
+    }
+}
+
+// Medium devices
+@mixin md($direction:'') {
+    @if ($direction == 'up') {
+       @media (min-width: #{$screen-md-min}) {
+           @content;
+       }
+    } @else {
+       @media (max-width: #{$screen-md-min - 1}) {
+           @content;
+       }
+    }
+}
+
+// Large devices
+@mixin lg($direction:'') {
+    @if ($direction == 'up') {
+       @media (min-width: #{$screen-lg-min}) {
+           @content;
+       }
+    } @else {
+       @media (max-width: #{$screen-lg-min - 1}) {
+           @content;
+       }
+    }
+}
+
+// Extra large devices
+@mixin xl($direction:'') {
+    @if ($direction == 'up') {
+       @media (min-width: #{$screen-xl-min}) {
+           @content;
+       }
+    } @else {
+       @media (max-width: #{$screen-xl-min - 1}) {
+           @content;
+       }
+    }
+}
+
+// Custom devices
+@mixin rwd($screen, $direction:'') {
+    @if ($direction == 'up') {
+       @media (min-width: $screen+'px') {
+           @content;
+       }
+    } @else {
+       @media (max-width: $screen+'px') {
+           @content;
+       }
+    }
+}
+
+//Keyframes
+@keyframes sk-stretchdelay {
+    0%, 40%, 100% {
+        transform: scaleY(0.4);
+        -webkit-transform: scaleY(0.4);
+    }  20% {
+           transform: scaleY(1.0);
+           -webkit-transform: scaleY(1.0);
+       }
+}
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+}

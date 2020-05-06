@@ -1,0 +1,24 @@
+<?php //%255BApp%255CEntity%255CCountry%2524countrylist%255D%255B1%255D
+
+namespace Symfony\Component\VarExporter\Internal;
+
+return $getExpiry ? PHP_INT_MAX : Hydrator::hydrate(
+    $o = [
+        clone (Registry::$prototypes['Doctrine\\ORM\\Mapping\\OneToOne'] ?? Registry::p('Doctrine\\ORM\\Mapping\\OneToOne')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'targetEntity' => [
+                'App\\Entity\\CountryList',
+            ],
+            'mappedBy' => [
+                'referencedcountry',
+            ],
+        ],
+    ],
+    [
+        $o[0],
+    ],
+    []
+);

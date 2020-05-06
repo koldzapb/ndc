@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+    {% block bodyheader %}
+        <div class="header-content">
+            <div class="container">
+                <div class="ad-line"></div><!--/.ad-line-->
+                <h1 class="page-title">{{ page.heading|shortCodes }}</h1>
+            </div><!--/.wrap-->
+        </div><!--/#content-header-->
+    {% endblock %}
+
+
+
+    {% block main %}
+            <div class="container text-holder">
+                <a class="scroll-to-button scroll-to-link" href="#button-link-1" aria-label="Scroll to casinos">
+                    <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                </a>
+                <div class="page-content">{{ page.content|raw }}</div>
+            </div>
+
+            <div class="list-data container">
+                <span id="button-link-1"></span>
+                <div class="casino-list-wrapper">
+                    <div class="d-sm-flex justify-content-between align-items-center">
+                        <div class="d-sm-flex">
+                            <h2 class="list-data-headline">All Casinos</h2>
+                            <div class="spinner filter-spinner">
+                                <div class="rect1"></div>
+                                <div class="rect2"></div>
+                                <div class="rect3"></div>
+                                <div class="rect4"></div>
+                                <div class="rect5"></div>
+                            </div>
+                        </div>
+                        <div class="filter-holder">
+                            <span>Sort by</span>
+                            <div class="dropdown d-inline">
+                                <button class="dropdown-toggle dropdown-filter-btn" type="button" id="dropdownFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Please Select
+                                </button>
+
+                                <div id="cas_sort" class="dropdown-menu " aria-labelledby="dropdownFilter">
+                                    <a class="dropdown-item" href="#" data-sorttype="highRating" data-text="Highest Rating" onclick="return false;">Highest Rating</a>
+                                    <a class="dropdown-item" href="#" data-sorttype="lowRating" data-text="Lowest Rating" onclick="return false;">Lowest Rating</a>
+                                    <a class="dropdown-item" href="#" data-sorttype="nameAsc" data-text="A-Z" onclick="return false">A-Z</a>
+                                    <a class="dropdown-item" href="#" data-sorttype="nameDesc" data-text="Z-A" onclick="return false">Z-A</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="casinos-list">
+                        {{ casinoslist|raw }}
+                    </div>
+
+                    <div class="list-data-bottom">
+                        <div class="page-load">
+                            <span class="current-no" id="current_casinos">{% if(totalnumber_for_pagination<50) %}{{ totalnumber_for_pagination }}{% else %}50{% endif %}</span>/<span id="totalcasinos">{{ totalnumber_for_pagination }}</span>
+                        </div>
+                        {% if(totalnumber_for_pagination>50) %}
+                        <div class="list-data-buttons">
+                            <a href="#" id="more_casinos" first="50" max="50" class="btn btn-orange-outline" onclick="return false;">Load More</a>
+                            <a href="#" id="all_casinos" first="50" max="2000" class="btn btn-orange-outline" onclick="return false;">Load All</a>
+                        </div>
+                        {% endif %}
+                        <div id="bottom_spinner "class="spinner">
+                            <div class="rect1"></div>
+                            <div class="rect2"></div>
+                            <div class="rect3"></div>
+                            <div class="rect4"></div>
+                            <div class="rect5"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {{ render(controller(
+            'App\\Controller\\TemplateController::joinContent'
+        ))
+        }}
+
+
+        {{ render(controller(
+            'App\\Controller\\TemplateController::sectionInterest',{'pageTags':page.tags}
+        ))
+        }}
+
+    {% endblock %}

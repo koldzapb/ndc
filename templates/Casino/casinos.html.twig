@@ -1,0 +1,61 @@
+{% for casino in casinos %}
+    <div class='casino-list-row'>
+
+        <div class='casino-logo no-border casino-list-item'>
+            {% if casino.isavailableincountry==1 %}
+                <span class="flag">
+                    <img src='{{ country.imgSrc }}' alt="{{ country.name }}" width="16" height="11">
+                </span>
+            {% endif %}
+            <a href='{{ path('visit_casino',{id:casino.id}) }}'  title='{{ casino.casinoname }}' rel='noopener nofollow' target='_blank'>
+                <img class="lazyload" src="{{asset(('img/lazy.png'))}}" data-original="{{ casino.logo90 }}" title='{{ casino.casinoname }}'  alt="{{ casino.casinoname }}" width="90" height="90">
+            </a>
+        </div>
+
+        {% if (casino.likes|length >1 or casino.posts|length >1 )  %}
+            <div class='casino-list-item hidden-cell casino-comments'>
+                {% if casino.posts|length >1 %}
+                    <span class='comments-no'><span class="icon"></span>{{ casino.posts|length }} Comments</span>
+                {% endif %}
+                {% if casino.likes|length >1 %}
+                    <span class="likes-no"><span class="icon"></span>{{ casino.likes|length }} Likes</span>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="casino-list-item casino-no-comments"></div>
+        {% endif %}
+
+        <div class='casino-list-item casino-rating hidden-cell'>
+            <p class='cell-subtitle'>Rating</p>
+            <p class='casino-rating-value'><span>{{ casino.averagerating }}</span>/5</p>
+            <div class='progress'>
+                <span class='progress-bar' role='progressbar' style='width: {{ casino.ratingpercent }}%;' aria-valuenow='{{ casino.ratingpercent }}' aria-valuemin='0' aria-valuemax='100'>
+                </span>
+            </div>
+        </div>
+
+        <div class='casino-list-item casino-powered-by hidden-cell'>
+            <p class='cell-subtitle'>Powered By</p>
+                {% include 'casino_softwares_for_country_list.html.twig' with {'softwares': casino.softwares , 'casinosPage':true} %}
+        </div>
+
+        <div class='casino-list-item casino-review'>
+            <a href='#' class='btn-like tooltip-btn' data-toggle='tooltip' data-placement='top' title='Like' data-casino='{{ casino.id }}' onclick='return false;' aria-label="Like"></a>
+            <a href='{{ path('casino-review',{id:casino.id,casinoname:casino.slug}) }}' class='btn-review tooltip-btn' data-toggle='tooltip' data-placement='top' title='Read Review' aria-label="Read Review"></a>
+        </div>
+
+        <div class='no-border casino-list-item casino-link'>
+            <a class='show-hidden-cells' href="#" aria-label="Show hidden"></a>
+            <a href='{{ path('visit_casino',{id:casino.id}) }}'  title='{{ casino.casinoname }}' rel='noopener nofollow' class='btn btn-primary' target='_blank'>
+                {% if country.name=='United Kingdom' %}PLAY{% else %}PLAY NOW{% endif %}
+            </a>
+        </div>
+    </div>
+
+
+
+{% endfor %}
+
+
+
+

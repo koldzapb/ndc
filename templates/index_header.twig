@@ -1,0 +1,115 @@
+<div class="header-content">
+    <div class="carousel-header-wrap">
+        <div class="ad-line"></div><!--/.ad-line-->
+        {% if ndw|length %}<h3 class="carousel-main-title">No Deposit casinos of the week</h3>{%endif%}
+        <div id="carouselHeader" class="carousel slide carousel-fade" data-ride="carousel">
+            <div class="carousel-inner" role="listbox">
+                {% set k=1 %}
+                {% for casino in ndw %}
+                {% if(k==1) %}
+                <div class="carousel-item slide-{{ k }} active " role="option">
+                    {% else %}
+                    <div class="carousel-item slide-{{ k }} " role="option">
+                        {% endif %}
+                        {% set k=k+1 %}
+                        <div itemscope itemtype="http://schema.org/Offer" >
+                            <meta itemprop="url" content='{{ absolute_url(path("casino-review",{"id":casino.id,"casinoname":casino.slug})) }}'/>
+                            <meta itemprop="name" content="{{ casino.casinoname }}" />
+                            <div class="carousel-title">
+                                <a class="carousel-title-image" href="{{ path('visit_casino',{id:casino.id}) }}" title="{{ casino.casinoname }}" rel="noopener nofollow" target="_blank">
+                                    <img class="lazyload" src="{{asset(('img/lazy.png'))}}" data-original="{{ asset(casino.logo90) }}" alt="{{ casino.casinoname }}" width="90" height="90" />
+                                </a>
+                                <div class="carousel-title-holder">
+                                    <h2>{{ casino.casinoname }}</h2>
+                                    {% if(casino.IsAvailableInCountry==true)%}
+                                        <img class="carousel-title-flag lazyload" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQIHWO4/+INAAVdArRD1D4LAAAAAElFTkSuQmCC" data-original="{{asset(country.imgSrc)}}" width="24" height="24" alt="{{ country.name~ ' flag' }}" >
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% set appropBonus=bonus_importance.getapropriattebonus(casino) %}
+                            <ul class="carousel-bonus-list">
+                                {% if appropBonus.maxbonus %}
+                                    <li class="carousel-bonus-amount">{{ appropBonus.symbol }} {{ appropBonus.maxbonus|split('.')|first }}</li>
+                                {% endif %}
+                                <li class="carousel-bonus-name" itemprop="description">{% if appropBonus.bonustype %}{{ appropBonus.bonustype.name }}{% endif %}</li>
+                                {% if appropBonus.code!=null %}
+                                    <li class="carousel-bonus-code">
+                                        Code:<br/>
+                                        {% if appropBonus.code|length > 8 %}
+                                            <span class="tooltip-btn tooltip-hover" data-toggle="tooltip" data-placement="top" title="Copy to Clipboard"><small class="copy-code tooltip-btn" data-toggle="tooltip" data-placement="top" title="Code copied to Clipboard" data-trigger="manual">{{ appropBonus.code }}</small></span>
+                                        {% else %}
+                                            <span class="tooltip-btn tooltip-hover" data-toggle="tooltip" data-placement="top" title="Copy to Clipboard"><span class="copy-code tooltip-btn" data-toggle="tooltip" data-placement="top" title="Code copied to Clipboard" data-trigger="manual">{{ appropBonus.code }}</span></span>
+                                        {% endif %}
+                                    </li>
+                                {% endif %}
+                                <li>Min WR:<br/>{{ appropBonus.wr }}</li>
+                                {% if appropBonus.exclusive ==1%}
+                                    <li>Exclusive:<br/>No Deposit bonus</li>
+                                {% endif %}
+                                {% if appropBonus.tcurl|length>0 %}
+                                    <li class="carousel-bonus-link"><a href="{{ appropBonus.tcurl }}" rel="nofollow noopener" target="_blank">T&C's Apply</a></li>
+                                {% endif %}
+                            </ul>
+                            <ul class="carousel-activity-list">
+                                {% if(casino.posts|length > 0) %}
+                                    <li>
+                                        <a class="comments" href="/casino-review/{{ casino.id }}/{{ casino.slug }}/#comments">
+                                            <span class="icon"></span>
+                                            {{ casino.posts|length }} {% if (casino.posts|length == 1) %}{{ 'Comment' }}{% else %}{{ 'Comments' }}{% endif %}
+                                        </a><!--/.comments-->
+                                    </li>
+                                {% endif %}
+                                {% if casino.likes|length > 0 %}
+                                    <li>
+                                        <a class="likes" data-casino="{{ casino.id }}" href=""  onclick="return false;">
+                                            <span class="icon"></span>
+                                            {{ casino.likes|length }} {% if(casino.likes|length ==1) %}{{ 'Like' }}{% else %}{{ 'Likes' }}{% endif %}
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                <li>
+                                    <div class="powered">
+                                        {% include 'casino_softwares_for_country_list.html.twig' with {'softwares': casino.softwares} %}
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="button-holder" itemscope itemprop="seller" itemtype="http://schema.org/Organization">
+                                <meta itemprop="name" content="{{ casino.casinoname }}" />
+                                <meta itemprop="url" content="{{ absolute_url(path('visit_casino',{id:casino.id})) }}" />
+                                <a class="btn btn-lg btn-primary" href="/casinourl/{{ casino.id }}" title="{{ casino.casinoname }}" target="_blank" rel="noopener nofollow">{% if country.name=='United Kingdom' %}play{% else %}play now{% endif %}</a>
+                                <a class="btn btn-lg btn-light" href="/casino-review/{{ casino.id }}/{{ casino.slug }}">view details</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="popular d-none d-md-block">
+                    <h3>
+                        Popular Casinos For {{ country.name }}
+                        <img src="{{asset(country.imgSrc)}}" alt="{{ country.name }}" width="16" height="11">
+                    </h3>
+                    <ul>
+                        {% for casino in bestcasinos %}
+                            {% if loop.index < 6 %}
+                                <li  class="popular-casino">
+                                    <a href="/casinourl/{{ casino.id }}" title="{{ casino.casinoname }}" rel="noopener nofollow" target="_blank">
+                                        <img class="lazyload" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQIHWO4/+INAAVdArRD1D4LAAAAAElFTkSuQmCC"
+                                             data-original="{{ casino.logo35 }}" alt="{{ casino.casinoname }}" width="35" height="35">
+                                        <span>{{ casino.casinoname }}</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                <ol class="carousel-indicators">
+                    {% set active=0 %}
+                    {% for casino in ndw  %}
+                        <li data-target="#carouselHeader" data-slide-to="{{ active }}" {% if (active==0) %}{{ "class='active'" }}{% endif %}></li>
+                        {% set active=active + 1 %}
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+    </div>
+</div><!--/#content-header-->

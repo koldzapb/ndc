@@ -1,0 +1,44 @@
+<div class="join-content">
+    <a class="scroll-to-button scroll-to-link" href="#button-link-5" aria-label="Scroll to Join form">
+        <i class="fas fa-arrow-down" aria-hidden="true"></i>
+    </a>
+
+    <div class="container-small">
+        <h2 class="h1" id="button-link-5">Join Today it's Free</h2>
+        <p class="join-descr">We will let you know when we discover new no deposit bonuses<br> and receive our newsletter with exclusive bonuses every week.</p>
+        <form class="join-form d-md-flex justify-content-center">
+            <div class="form-group">
+                <input aria-label="Your Name" placeholder="Your Name" type="text" id="news_name">
+            </div>
+            <div class="form-group">
+                <input aria-label="Email Address" placeholder="Email Address" type="email" required id="news_email">
+            </div>
+            <div class="form-group">
+                <a href="#" id="join_button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#registerModal"  onclick="return false;">Join NOW</a>
+            </div>
+        </form>
+        <div class="d-md-flex justify-content-between align-items-center text-md-left">
+            <div class="shareLinks">
+                <h3 class="join-subheadline">Join Instantly With Your Social Account</h3>
+                <div class="g-plus" data-action="share" data-href="https://www.nodepositcasino.org"></div>
+                <div class="fb-like" data-href="{{ app.request.uri  }}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+            </div>
+            <ul class="social no-list">
+                <li>
+                    <a href="{{ socialregister.loginUrl }}" class="s-facebook" aria-label="facebook">
+                        <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ socialregister.url }}" class="s-twitter" aria-label="twitter">
+                        <i class="fab fa-twitter" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li>
+                    <div class="g-signin2 s-gplus" {% if not is_granted('IS_AUTHENTICATED_FULLY') %}data-onsuccess="onSignIn"{% endif %}></div>
+                </li>
+            </ul>
+        </div>
+    </div><!--/.wrap-->
+
+</div><!--/.join-->

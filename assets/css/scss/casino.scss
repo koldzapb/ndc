@@ -1,0 +1,1012 @@
+.casino {
+    &-list {
+        &-wrapper {
+            padding-bottom: 2rem;
+           @include md(up) {
+               padding-bottom: 5rem;
+           }
+        }
+        &-row {
+            display: flex;
+            clear: both;
+            flex-flow: row;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border: 1px solid $light_gray;
+            position: relative;
+            .casino-list-item {
+                padding: 0 5px;
+                @include md(up) {
+                    border-right: 1px solid $light_dove;
+                    flex: 1;
+                }
+                @include xl(up) {
+                    padding: 15px;
+                }
+                @include xl {
+                    font-size: 0.8rem;
+                }
+                &.no-border {
+                    border: 0;
+                }
+                .cell-subtitle {
+                    margin-bottom: 5px;
+                }
+                @include md {
+                    padding: 5px;
+                    &.hidden-cell {
+                        display: none;
+                    }
+                }
+            }
+            &.opened-row {
+                @include md {
+                    padding-bottom: 10px;
+                    .hidden-cell {
+                        display: block;
+                    }
+                    .casino {
+                        &-logo {
+                            margin-bottom: 5px;
+                            border-bottom-left-radius: 0;
+                            border-bottom: 1px solid $light_dove;
+                        }
+                        &-bonus, &-link {
+                            border-bottom: 1px solid $light_dove;
+                            margin-bottom: 5px;
+                        }
+                        &-review {
+                            border-bottom: 1px solid $light_dove;
+                            margin-bottom: 5px;
+                            .casino-list-bonuses & {
+                                border-left: 1px solid $light_dove;
+                                border-bottom: 0;
+                                margin-bottom: 0;
+                            }
+                        }
+                        &-comments {
+                            border-right: 1px solid $light_dove;
+                        }
+                    }
+                }
+            }
+            .casino-logo {
+                background-color: $tiara_50;
+                height: 100px;
+                position: relative;
+                padding: 0;
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+                @include md(up) {
+                    border-radius: 10px 0 0 10px;
+                    max-width: 110px;
+                    flex: 1 1 110px;
+                }
+                @include xl(up) {
+                    height: 115px;
+                    max-width: 160px;
+                    flex: 1 1 160px;
+                    padding: 10px;
+                }
+                .flag {
+                    position: absolute;
+                    top: 5px;
+                    left: 10px;
+                }
+                img {
+                    display: table;
+                    margin: 0 auto;
+                }
+            }
+            .casino-link {
+                text-align: center;
+            }
+            @include md {
+                .casino {
+                    &-logo {
+                        order: 1;
+                        width: 33%;
+                        padding: 10px;
+                    }
+                    &-bonus {
+                        order: 2;
+                        width: 33%;
+                        height: 100px;
+                    }
+                    &-link {
+                        order: 3;
+                        width: 33%;
+                        height: 100px;
+                        display: flex;
+                        align-items: center;
+                        padding-bottom: 10px;
+                    }
+                    &-rating {
+                        order: 4;
+                        width: 50%;
+                    }
+                    &-review {
+                        order: 2;
+                        width: 33%;
+                        height: 100px;
+                        line-height: 110px;
+                        .casino-list-bonuses & {
+                            order: 5;
+                            width: 50%;
+                            text-align: center;
+                            height: auto;
+                            line-height: normal;
+                        }
+                    }
+                    &-comments {
+                        order: 6;
+                        width: 50%;
+                    }
+                    &-powered-by {
+                        order: 7;
+                        width: 50%;
+                    }
+                    &-no-comments {
+                        display: none;
+                    }
+                }
+            }
+            .comments-no,
+            .likes-no {
+                display: block;
+                margin: 10px 0;
+                white-space: nowrap;
+                @include xl {
+                    font-size: 0.7rem;
+                }
+                @include md {
+                    display: table;
+                    margin: 10px auto;
+                }
+            }
+            .box-exclusive {
+                position: absolute;
+                bottom: 10px;
+                left: 10px;
+                line-height: 1;
+                background-color: $christi;
+                color: $white;
+                text-transform: uppercase;
+                font-size: 0.5rem;
+                border-radius: 3px;
+                padding: 3px 5px;
+            }
+            p {
+                margin: 0;
+            }
+            .btn {
+                &-like, &-review {
+                    display: inline-block;
+                    margin: 0 5px;
+                    @include xl {
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 100%;
+                    }
+                }
+                @include xl {
+                    &-like {
+                        background-position: -250px -20px;
+                    }
+                    &-review {
+                        background-position: -168px -171px;
+                    }
+                }
+                &-primary {
+                    box-shadow: 0 0 15px 5px rgba(204,204,223,0.3);
+                    border: 2px solid $lightning_yellow;
+                    &:hover {
+                        border: 2px solid $jaffa;
+                        color: $jaffa;
+                    }
+                    @include xl {
+                        padding: 10px;
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
+    &-bonus {
+        font-size: 0.8rem;
+        &-amount, &-freespins {
+            color: $jaffa;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+    }
+    &-rating {
+        text-align: center;
+        &-value {
+            span {
+                font-size: 1.3rem;
+                color: $ship_cove;
+                display: inline-block;
+            }
+        }
+    }
+    &-powered-by {
+        text-align: center;
+        position: relative;
+        img {
+            width: 25px;
+            margin-bottom: 5px;
+            margin-right: 5px;
+        }
+    }
+    &-review {
+        text-align: center;
+    }
+}
+.list-data {
+    &-bottom {
+        text-align: center;
+        .spinner {
+            margin: 0 auto;
+        }
+        .page-load {
+            @include sm(up) {
+                float: right;
+            }
+            font-size: 0.9rem;
+            color: $fiord;
+            .current-no {
+                color: $jaffa;
+                font-size: 1.3rem;
+            }
+        }
+    }
+    &-buttons {
+        margin: 2rem auto 1.5rem;
+        .btn {
+            margin-bottom: 0.5rem;
+        }
+    }
+    &-headline {
+        font-weight: 500;
+    }
+}
+#loading {
+    width: 100%;
+    text-align: center;
+    display: none;
+    font-size: 1.5rem;
+}
+.progress {
+    margin: 0.5rem auto;
+    background-color: $prim;
+    border-radius: 0;
+    width: 50%;
+    height: 5px;
+    &-bar {
+        background-color: $ship_cove;
+        height: 5px;
+    }
+}
+.code_hover {
+    opacity: 0;
+    position: absolute;
+    min-width: 100%;
+    width: auto;
+    left: 0;
+    bottom: 0;
+    background: $prim;
+    color: $concord;
+    transition: opacity 0.5s linear;
+}
+.softwares_hover {
+    display: none;
+	transform:translate(-50%,-50%);
+	position:absolute;
+	top:50%;
+	left:50%;
+    width: 173px;
+    background-color: $gallery;
+    border: 1px solid $gallery;
+    z-index: 1;
+    padding-top: 5px;
+    padding-left: 5px;
+    box-shadow: -1px 2px 37px -1px $fedora;
+}
+.more-softwares {
+    font-size: 0.8rem;
+    @extend .d-inline-middle;
+    padding-bottom: 5px;
+    cursor: pointer;
+}
+a.show-hidden-cells {
+    display: block;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1.3rem;
+    color: $robins_egg_blue;
+    position: absolute;
+    top: 0;
+    right: 0;
+    &:after {
+        font-family: 'Font Awesome 5 Free';
+        content: "\f107";
+        font-weight: bold;
+        font-style: normal;
+        opacity: 1;
+    }
+    &.shown {
+        color: $sunglo;
+        &:after {
+            content: "\f106";
+        }
+    }
+    @include md(up) {
+        display: none;
+    }
+}
+//Top casinos
+.top-casino-item {
+    width: 100%;
+    display: flex;
+    border: 1px solid $light_gray;
+    border-radius: 10px;
+    background-color: $white;
+    margin-bottom: 1rem;
+    .casino {
+        &-bonus {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-flow: column;
+            text-align: center;
+            background: $lily_white;
+            border-right: 1px solid $light_gray;
+            border-radius: 10px 0 0 10px;
+            padding: 0 15px;
+            &-amount {
+                color: $fiord;
+                font-size: 1.5rem;
+                font-weight: 500;
+            }
+        }
+        &-info {
+            padding: 15px 5px;
+            @include xl(up) {
+                padding: 15px;
+            }
+            @include md {
+                @media (min-width:360px){
+                    padding: 15px;
+                }
+            }
+            width: 100%;
+        }
+        &-name {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            font-family: $font-family-base;
+            font-weight: 700;
+        }
+        &-rating {
+            text-align: left;
+            font-size: .8rem;
+            &-value span {
+                font-size: 1rem;
+            }
+            .progress {
+                width: 80px;
+                margin: 0;
+            }
+        }
+        &-links {
+            margin-top: 10px;
+            @include xl(up) {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            @include md {
+                @media (min-width:360px){
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+            }
+        }
+        &-review {
+            display: flex;
+            @include xl {
+                margin-bottom: 10px;
+            }
+            @include md(up) {
+                @media (max-width:360px){
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+    .btn {
+        &-primary {
+            box-shadow: 0 0 15px 5px rgba(204,204,223,0.3);
+            border: 2px solid $lightning_yellow;
+            padding: 7px 30px;
+            &:hover {
+                border: 2px solid $jaffa;
+                color: $jaffa;
+            }
+        }
+        &-like {
+            background-position: -245px -15px;
+        }
+        &-review {
+            background-position: -163px -165px;
+        }
+        &-like, &-review {
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+            margin-right: 15px;
+        }
+    }
+    p {
+        margin: 0;
+    }
+}
+
+//Casino review
+.review {
+    &-header {
+        &-content {
+            text-align: center;
+            .btn {
+                margin: 0 0.5rem;
+                @include md {
+                    padding: 12px 5px;
+                    width: 47%;
+                    max-width: 220px;
+                    margin: 0 1%;
+                    font-size: 13px;
+                }
+            }
+            .btn-primary:hover {
+                border-color: $white;
+            }
+        }
+        &-list {
+            @extend .no-list;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: $white;
+            margin-bottom: 2rem;
+            li {
+                margin: 0 1.5%;
+            }
+            .comments, .likes {
+                @include md {
+                    .text {
+                        display: none;
+                    }
+                }
+            }
+        }
+        &-restrictions {
+            p {
+                @extend .d-inline-middle;
+                margin-bottom: 0;
+                font-size: 0.8rem;
+                margin-left: 20px;
+                max-width: 200px;
+                line-height: 1.1;
+                text-align: left;
+            }
+            span {
+                color: $lightning_yellow;
+                text-transform: uppercase;
+                font-size: 1rem;
+                font-weight: $font-weight-bold;
+                &.accepted {
+                    color: $lightning_yellow;
+                }
+                &.not-accepted {
+                    color: $red;
+                }
+            }
+            @include md {
+                display: none;
+            }
+        }
+    }
+    &-title {
+        &-image {
+            width: 105px;
+            height: 105px;
+            @extend .d-inline-middle;
+            @include lg(up) {
+                width: 125px;
+                height: 125px;
+                margin-right: 15px;
+            }
+            background-color: $light_purple;
+            border-radius: 100%;
+            box-shadow: 0 0 7px 0 rgba(52, 54, 56, 0.5);
+            padding: 10px;
+            @include md {
+                display: block;
+                margin: 0 auto;
+            }
+        }
+        &-holder {
+            margin-bottom: 20px;
+            .page-title {
+                margin-bottom: 0;
+                text-shadow: none;
+                @extend .d-inline-middle;
+                @include lg {
+                    font-size: 2.5rem;
+                }
+                @include md {
+                    display: block;
+                }
+            }
+        }
+    }
+    &-bonuses {
+        position: relative;
+        @extend .padding-large;
+        @extend .gray-box;
+        text-align: center;
+        &-h {
+            font-size: 2.5rem;
+            @include md(up) {
+                font-size: 4.5rem;
+            }
+        }
+    }
+    &-bonus {
+        &-item {
+            max-width: 340px;
+            margin: 0 auto;
+            border: solid 1px $geyser;
+            background-color: $white;
+            color: $star_dust;
+            position: relative;
+            padding: 34px 20px 30px;
+            text-align: center;
+            border-radius: 20px;
+            &.single {
+                @include lg(up) {
+                    max-width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 20px 15px;
+                    text-align: left;
+                    border-radius: 10px;
+                    .review-bonus-amount {
+                        font-size: 1.3rem;
+                        min-height: 0px;
+                        margin: 0 20px;
+                        .up-to, .spins {
+                            font-size: 0.8rem;
+                        }
+                    }
+                    .box-exclusive {
+                        top: 5px;
+                        left: 15px;
+                    }
+                    .review-bonus-code {
+                        min-height: 0px;
+                    }
+                    .review-single-top {
+                        width: 33%;
+                        max-width: 70px;
+                        img {
+                            margin-bottom: 10px;
+                        }
+                    }
+                    .show-more-height {
+                        height: auto;
+                        overflow: auto;
+                    }
+                    .show-more {
+                        display: none;
+                    }
+                    .review-bonus-details {
+                        margin-bottom: 20px;
+                        .border-side {
+                            border: none;
+                            padding: 0;
+                        }
+                        li {
+                            margin: 0 10px;
+                        }
+                    }
+                    .review-bonus-description {
+                        min-height: 0px;
+                        max-width: 500px;
+                        margin: 0 20px;
+                        font-size: 12px;
+                    }
+                    .review-bonus-name {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+            &:hover {
+                box-shadow: 0 0 20px 10px $mischka_70;
+                border-color: $white;
+            }
+            .show-more-height {
+                height: 100px;
+                overflow: hidden;
+                cursor: pointer;
+            }
+            .show-more {
+                color: $link-color !important;
+                position: relative;
+                font-size: 12px;
+                padding: .5rem;
+                height: 20px;
+                cursor: pointer;
+                font-weight: $font-weight-bold;
+                &:focus {
+                    outline: none;
+                }
+            }
+            .box-exclusive {
+                position: absolute;
+                top: 34px;
+                right: 20px;
+                line-height: 1;
+                text-transform: uppercase;
+                font-size: 0.8rem;
+                i {
+                    color: $orange;
+                }
+            }
+            .btn-primary {
+                box-shadow: 0 0 15px 5px rgba(204,204,223,0.3);
+                border: 2px solid $lightning_yellow;
+                padding: 7px 60px;
+                &:hover {
+                    box-shadow: none;
+                    border: 2px solid $jaffa;
+                    color: $jaffa;
+                }
+            }
+        }
+        &-description {
+            font-size: 0.9rem;
+            line-height: 150%;
+            margin-bottom: 1rem;
+            @include md(up) {
+                min-height: 122px;
+            }
+        }
+        &-img {
+            margin: 0 auto;
+        }
+        &-toc {
+            font-size: 0.8rem;
+            display: block;
+            height: 14px;
+            color: $link-color;
+            &:hover {
+                color: $link-color;
+            }
+            .single & {
+                margin-top: 5px;
+            }
+        }
+        &-name {
+            color: $jaffa;
+            font-size: 1rem;
+            font-family: $font-family-base;
+            font-weight: 500;
+            text-transform: uppercase;
+            @include md(up) {
+                margin-bottom: 35px;
+            }
+        }
+        &-amount {
+            font-size: 3rem;
+            font-weight: 500;
+            font-family: $font-family-base;
+            line-height: 1.1;
+            @include md(up) {
+                min-height: 105px;
+            }
+            .up-to {
+                font-size: 1.5rem;
+                font-weight: 700;
+            }
+            .spins {
+                font-size: 2rem;
+                font-weight: 700;
+            }
+        }
+        &-code {
+            @include md(up) {
+                min-height: 24px;
+            }
+            span {
+                color: $fiord;
+                font-weight: 500;
+            }
+        }
+        &-list {
+            display: none;
+            &.slick-initialized {
+                display: block;
+            }
+            .slick-list {
+                @include md(up) {
+                    padding: 20px 0;
+                }
+            }
+        }
+        &-details {
+            @extend .no-list;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            line-height: 1.1;
+            margin-bottom: 40px;
+            .title {
+                color: $fiord;
+                font-weight: 500;
+                display: block;
+            }
+            .border-side {
+                border-left: 1px solid $maverick;
+                border-right: 1px solid $maverick;
+                padding: 0 5px;
+                margin: 0 5px;
+                @include lg(up) {
+                    padding: 0 10px;
+                }
+            }
+            .war {
+                color: $fiord;
+                font-weight: 500;
+            }
+        }
+    }
+    &-like {
+        padding: 12px 30px;
+        .icon {
+            display: inline-block;
+            vertical-align: text-bottom;
+            margin-right: 10px;
+            width: 24px;
+            height: 21px;
+            background: url('/../../../img/sprite.png') -367px -52px;
+        }
+        &:hover {
+            .icon {
+                background-position: -367px -93px;
+            }
+            border-color: $white;
+        }
+    }
+    &-comment {
+        background-color: $white;
+        padding: 12px 30px;
+        color: $jaffa;
+        .icon {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 10px;
+            width: 27px;
+            height: 22px;
+            background: url('/../../../img/sprite.png') -310px -251px;
+        }
+        &:hover {
+            .icon {
+                background-position: -142px -293px;
+            }
+            color: $gray-900;
+        }
+    }
+    &-comments-no {
+        color: $fiord;
+        font-size: 1.5rem;
+        font-weight: $font-weight-bold;
+    }
+}
+.morecasinowar {
+    position: relative;
+    cursor: pointer;
+    color: $link-color !important;
+    font-weight: 500;
+}
+.casinowar {
+    display: none;
+    background-color: $white;
+    position: absolute;
+    z-index: 5;
+    width: 200px;
+    box-shadow: 0 0 15px 5px $mischka_30;
+    padding: 10px;
+    border: 1px solid $gallery;
+    transform: translateX(-50%);
+    position: absolute;
+    left: 50%;
+    bottom: 30px;
+    &:after {
+        content:'';
+        width: 0;
+        height: 0;
+        position: absolute;
+        transform:translateX(-50%);
+    	left:50%;
+    	bottom: -10px;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid $white;
+        box-shadow: 0 10px 10px 0px $mischka_30;
+    }
+    &-item {
+        margin-bottom: 10px;
+        color: $fiord;
+        font-weight: 500;
+        line-height: 20px;
+        img {
+            float: left;
+        }
+        &:last-child {
+            margin-bottom: 0;
+        }
+        @extend .clearfix;
+    }
+}
+
+.main-review {
+    position: relative;
+    @extend .padding-large;
+    border-top: 1px solid $mystic;
+    border-bottom: 1px solid $mystic;
+    background: $white url(/../../../img/casino-overview-mobile.png) center bottom no-repeat;
+    background-size: contain;
+    @include md(up) {
+        background: $white url(/../../../img/casino-overview.png) center bottom no-repeat;
+        background-size: contain;
+    }
+    @include md {
+        h2 {
+            text-align: center;
+        }
+    }
+    &-content  {
+        position: relative;
+        .button-holder {
+            margin: 25px 0 35px;
+            .btn {
+                margin: 0 5px 10px;
+                @include md(up) {
+                    margin:0 20px 0 0;
+                }
+            }
+            @include md {
+                margin: 15px 0 15px;
+                text-align: center;
+            }
+        }
+        h3 {
+            @include md(up) {
+                width: 45%;
+            }
+        }
+    }
+    &-slideshow {
+        @include md(up) {
+            max-width: 55%;
+            float: right;
+        }
+        .slideshow-review {
+            margin: 0 15px 20px;
+            @include md(up) {
+                margin: 0 40px 20px;
+            }
+        }
+        .slider-big-img {
+            margin-bottom: 10px;
+            padding: 0 10px;
+            display: none;
+            &.slick-initialized {
+                display: block
+            }
+        }
+        .slider-thumb-nav {
+            margin: 0 auto;
+            display: none;
+            &.slick-initialized {
+                display: block
+            }
+            .slick-slide {
+                margin: 0 5px;
+                @include md(up) {
+                    margin: 0 10px;
+                }
+                opacity: 0.5;
+                cursor: pointer;
+                &.slick-current {
+                    opacity: 1;
+                }
+            }
+        }
+        .slick-prev {
+            left: -30px;
+        }
+        .slick-next {
+            right: -30px;
+        }
+    }
+    &-text {
+        margin-bottom: 3rem;
+        @include md {
+            margin-bottom: 1rem;
+            &.show-more-height {
+                max-height: 460px;
+                overflow: hidden;
+            }
+        }
+    }
+    .show-more {
+        font-weight: $font-weight-bold;
+        text-align: center;
+        color: $link-color;
+    }
+    .powered-by {
+        margin-bottom: 3rem;
+        @include md {
+            margin-top: 2rem;
+        }
+        span {
+            margin-bottom: 10px;
+            display: block;
+        }
+        img {
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+    }
+    h3 {
+        font-size: 1.5rem;
+        font-family: $font-family-base;
+        border-bottom: 1px solid $mystic;
+        padding-bottom: 10px;
+    }
+    &-bottom {
+        a {
+            color: $body-color;
+            &:hover {
+                color: $lightning_yellow;
+            }
+        }
+        img {
+            margin: 0 5px 5px 0;
+        }
+        div[class^='col-'] {
+            @include md {
+                margin-bottom: 1.5rem;
+            }
+        }
+    }
+    &-comments {
+        position: relative;
+        @extend .padding-large;
+    }
+}
+
+
+

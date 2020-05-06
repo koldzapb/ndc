@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+    {% block bodyheader %}
+        <div class="header-content">
+            <div class="container">
+                <div class="ad-line">
+                </div><!--/.ad-line-->
+                <h1 class="page-title">{{ page.heading }}</h1>
+            </div><!--/.wrap-->
+        </div><!--/#content-header-->
+    {% endblock %}
+
+
+    {% block main %}
+        <div class="text-holder container-narrow">
+            <a class="scroll-to-button scroll-to-link" href="#button-link-1" aria-label="Scroll to contact">
+                <i class="fas fa-arrow-down" aria-hidden="true"></i>
+            </a>
+            <div id="contactresponse"></div>
+            <div class="contact-form padding-large">
+                <span id="button-link-1"></span>
+                <div class="form-row">
+                     <div class="col-md-6">
+                         <div class="form-group">
+                             <input type="text" id="contactname" aria-label="Name *" placeholder="Name *" required class="contact-form-field">
+                         </div>
+                     </div>
+                     <div class="col-md-6">
+                         <div class="form-group">
+                             <input type="text" id="contactemail" aria-label="Email *" placeholder="Email *" required class="contact-form-field">
+                         </div>
+                     </div>
+                </div>
+                <div class="form-group">
+                        <textarea id="contactcontent" name="content" aria-label="Your Comment or Question *" placeholder="Your Comment or Question *" required class="contact-form-field"></textarea>
+                </div>
+                <p id="contact-error" class="invalid-feedback"> * These Fields Are Mandatory.</p>
+                <button id="contact" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+            <!-- END MAIN CONTENT-->
+
+    {% endblock %}

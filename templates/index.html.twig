@@ -1,0 +1,169 @@
+{% extends 'base.html.twig' %}
+
+    {% block bodyheader %}
+        {{ render(controller(
+            'App\\Controller\\TemplateController::indexHeader'
+        ))
+        }}
+    {% endblock %}
+
+
+    {% block main %}
+
+        {{ render(controller(
+            'App\\Controller\\TemplateController::mostLikedBonuses'
+        ))
+        }}
+
+            <div class="homepage-casino-list">
+                <div class="container">
+                    <div class="casino-list-wrapper">
+                        <div class="d-md-flex justify-content-between">
+                            <div class="d-md-flex">
+                                <nav class="tabs">
+                                    <ul>
+                                        <li class="secondMenu active"><a href="#" name="No_Deposit" style="cursor:pointer;" onclick="return false;" >No Deposit</a></li>
+                                        <li class="secondMenu"><a href="#" name="New" style="cursor:pointer;" onclick="return false;" >New</a></li>
+                                        <li class="secondMenu"><a href="#" name="Exclusive" onclick="return false;" >Exclusive</a></li>
+                                        <li class="secondMenu"><a href="#" name="Casino_Spins" onclick="return false;" >FreeSpins</a></li>
+                                    </ul>
+                                </nav>
+                                <div class="spinner filter-spinner">
+                                    <div class="rect1"></div>
+                                    <div class="rect2"></div>
+                                    <div class="rect3"></div>
+                                    <div class="rect4"></div>
+                                    <div class="rect5"></div>
+                                </div>
+                            </div>
+                            <div class="filter-holder">
+                                <span>Sort by</span>
+                                <div class="dropdown d-inline">
+                                    <button class="dropdown-toggle dropdown-filter-btn" type="button" id="dropdownFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-sorttype="highRating">Highest Rating</button>
+                                    <div id="bonus_sort" class="dropdown-menu " aria-labelledby="dropdownFilter">
+                                        <a class="dropdown-item" href="#" data-sorttype="highRating" data-text="Highest Rating" onclick="return false;">Highest Rating</a>
+                                        <a class="dropdown-item" href="#" data-sorttype="lowRating" data-text="Lowest Rating" onclick="return false;">Lowest Rating</a>
+                                        <a class="dropdown-item" href="#" data-sorttype="A-Z" data-text="A-Z" onclick="return false">A-Z</a>
+                                        <a class="dropdown-item" href="#" data-sorttype="Z-A" data-text="Z-A" onclick="return false">Z-A</a>
+                                        <a class="dropdown-item" href="#" data-sorttype="highAmount" data-text="Highest Amount" onclick="return false">Higest Amount</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-data"></div>
+                        <div class="list-data-bottom">
+                            <div class="page-load">
+                                <span class="current-no" id="current_bonus">50</span>/<span id="total_bonuses">934</span>
+                            </div>
+                            <div class="list-data-buttons">
+                                <a id="more_bonuses" first="50" max="50" bonustype="No Deposit" href="" onclick="return false" class="btn btn-orange-outline">Load More</a>
+                                <a id="all_bonuses" first="50" max="1000" bonustype="No Deposit" href="" onclick="return false" class="btn btn-orange-outline">Load All</a>
+                            </div>
+                            <div id="bottom_spinner" class="spinner">
+                                <div class="rect1"></div>
+                                <div class="rect2"></div>
+                                <div class="rect3"></div>
+                                <div class="rect4"></div>
+                                <div class="rect5"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        {{ render(controller(
+            'App\\Controller\\TemplateController::latestNewsAndArticlesForIndexPage'
+        ))
+        }}
+
+            <div class="main-text-section">
+                <a class="scroll-to-button scroll-to-link" href="#button-link-2" aria-label="Scroll to description">
+                    <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                </a>
+
+                <div class="container-narrow" id="button-link-2">
+                    <div class="panel-group home-panel-group" id="main-text-accordion">
+                        {% set collapse=0 %}
+                        {% for segment in segmentedtext %}
+                            {% if segment[1] is defined %}
+                                {%set collapse=collapse+1%}
+                                {%if(collapse==1)%}
+                                    {%set show='collapse show'%}
+                                    {%set aria='true'%}
+                                {%else%}
+                                    {%set show='collapse'%}
+                                    {%set aria='false'%}
+                                {%endif%}
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                      <h3 class="panel-title">
+                                        <a  data-toggle="collapse"
+                                            data-parent="#main-text-accordion"
+                                            href="#collapse-text-{{collapse}}"
+                                            class="collapse-toggle"
+                                            aria-expanded="{{aria}}"
+                                            >
+                                              {{ segment[0]|raw }}
+                                              <i class="fa fa-plus"></i>
+                                              <i class="fa fa-minus"></i>
+                                        </a>
+                                      </h3>
+                                    </div>
+                                    <div id="collapse-text-{{collapse}}" class="panel-collapse {{show}}" data-parent="#main-text-accordion">
+                                      <div class="panel-body">
+                                        {{ segment[1]|raw }}
+                                      </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <h1 class="accordionHeading">{{ segment[0]|raw }}</h1>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="homepage-activities live-activities-section">
+
+                <a class="scroll-to-button scroll-to-link" href="#button-link-3" aria-label="Scroll to Live Activities">
+                    <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                </a>
+
+                <div class="container" id="button-link-3">
+                    <div class="text-center">
+                        <h2 class="h1">Live Activities</h2>
+                        <p>See what our members have been saying about our casino reviews.</p>
+                    </div>
+                    <section class="box-comments box-comments-home" id="ndc_live_activities">
+                        {{ liveactivities|raw }}
+                    </section>
+
+                    <div class="text-center">
+                        <a class="btn btn-light-primary" id="more_activities" data-first="7"  onclick="return false;">More Activities</a>
+                    </div>
+                </div>
+            </div>
+
+
+        {{ render(controller(
+            'App\\Controller\\TemplateController::joinContent'
+        ))
+        }}
+
+
+    {% endblock %}
+
+    {% block stylesheets %}
+    {% endblock %}
+
+    {% block javascripts %}
+        <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=joshac"></script>
+    {% endblock %}
+
+
+
+

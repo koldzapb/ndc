@@ -1,0 +1,188 @@
+{% for activity in liveactivities %}
+
+    {% if activity.type.name == 'Casino Post' %}
+        <div  class='box-comments-item'>
+            <div class='box-comments-logo' id="live_p{{ activity.id }}">
+                {% if review is defined %}
+                    <span class="icon icon-comment"></span>
+                {% else %}
+                    <a href='{{ path('casino-review',{id:activity.postToCasino.id,casinoname:activity.postToCasino.slug}) }}'>
+                        <img class="lazyload" src="{{asset(('img/lazy.png'))}}" data-original='{{ activity.postToCasino.logo90 }}' alt='{{ activity.postToCasino.casinoname }}' width="90" height="90">
+                    </a>
+                {% endif %}
+            </div>
+
+            <div class='box-comments-name'>
+                <a href='{{ path('user',{id:activity.userAdded.id,username:activity.userAdded.username}) }}'>
+                    {{ activity.userAdded.username }}
+                </a>
+                posted to
+                <a href='{{ path('casino-review',{id:activity.postToCasino.id,casinoname:activity.postToCasino.slug}) }}'>
+                    {{ activity.postToCasino.casinoname }}
+                </a>:
+            </div>
+
+            <div class='box-comments-content'>
+                <p>{{ activity.postText }}</p>
+            </div>
+
+            <div class='box-comments-image'>
+                <a href='{{ path('user',{id:activity.userAdded.id , username:activity.userAdded.username}) }}'>
+                    <img width='50' height='50' class="lazyload" src="{{asset(('img/lazy.png'))}}" data-original='{{ activity.userAdded.imagelocation }}' alt='{{ activity.userAdded.username }}'/>
+                </a>
+            </div>
+
+            <div class='box-comments-user like-wrap'>
+                <div class='box-comments-user-inner'>
+                    <a class='box-comments-username' href='{{ path('user',{ id:activity.userAdded.id,username:activity.userAdded.username }) }}'>
+                        {{ activity.userAdded.username }}
+                    </a>
+                    <span id='wall_like_post_{{ activity.id }}'></span>
+                    <span class="box-comments-date">{{ activity.timeadded|date('M d,y h:s') }}</span>
+                </div>
+
+                <div class='box-comments-like'>
+                    {% if activity.usersWhoLikedPost.contains(app.user) %}
+                        <a href='' onclick='return false;' class='unlike-user-post tooltip-btn' data-placement='top' title='' data-original-title='Unlike' aria-label='Unlike' data-postid='{{ activity.id }}' data-userid='{{ activity.userAdded.id }}'></a>
+                    {% else %}
+                        <a href='' class='user-like-post btn-like tooltip-btn' data-toggle='tooltip'  data-placement='top' title='' data-original-title='Like' aria-label='Like' data-userid='{{ activity.userAdded.id }}' data-postid='{{ activity.id }}' onclick='return false;'></a>
+                    {% endif %}
+
+                    {% if activity.usersWhoLikedPost|length >0%}
+                        <span class='post-likes-num'>{{ activity.usersWhoLikedPost|length }}</span>
+                        {% if(activity.usersWhoLikedPost|length ==1) %}{{ 'Like' }}{% else %}{{ 'Likes' }}{% endif %}
+                    {% endif %}
+
+                    {% if activity.allowedtoremovepost(app.user)==true %}
+                        <a class='remove-user-comment' data-userid='{{ activity.userAdded.id }}' data-commentid='{{ activity.id }}' onclick='return false;' href='' aria-label="Remove comment">
+                            <i class='fas fa-times'></i>
+                        </a>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+
+    {% elseif activity.type.name == 'Casino Like' %}
+
+        <div  class='box-comments-item'>
+            <div class='box-comments-logo'>
+                {% if review is defined %}
+                    <span class="icon icon-like"></span>
+                {% else %}
+                    <a href='{{ path('casino-review',{id:activity.casinoLiked.id,casinoname:activity.casinoLiked.slug}) }}'>
+                        <img class="lazyload" src="{{asset(('img/lazy.png'))}}" data-original='{{ activity.casinoLiked.logo90 }}' alt='{{ activity.casinoLiked.casinoname }}' width="90" height="90">
+                    </a>
+                {% endif %}
+            </div>
+
+            <div class='box-comments-content' id="live_p{{ activity.id }}">
+                <a href='{{ path('user',{id:activity.userAdded.id,username:activity.userAdded.username}) }}'>
+                    {{ activity.userAdded.username }}
+                </a> liked
+                {% if review is defined %}
+                    {{ activity.casinoLiked.casinoname }}
+                {% else %}
+                    <a href='{{ path('casino-review',{id:activity.casinoLiked.id,casinoname:activity.casinoLiked.slug}) }}'>
+                        {{ activity.casinoLiked.casinoname }}
+                    </a>
+                {% endif %}
+            </div>
+
+            <div class='box-comments-name'></div>
+
+            <div class='box-comments-image'>
+                <a href='{{ path('user',{id:activity.userAdded.id,username:activity.userAdded.username}) }}'>
+                    <img height='50' width='50' class="lazyload" src="{{asset(('img/lazy.png'))}}" data-original='{{ activity.userAdded.imagelocation }}' alt='{{ activity.userAdded.username }}'/>
+                </a>
+            </div>
+
+            <div class='box-comments-user'>
+                <div class='box-comments-user-inner'>
+                    <a class="box-comments-username" href='{{ path('user',{id:activity.userAdded.id,username:activity.userAdded.username}) }}'>
+                        {{ activity.userAdded.username }}
+                    </a>
+                    <span class="box-comments-date">{{ activity.timeadded|date('M d,y h:s') }}</span>
+                </div>
+            </div>
+
+        </div>
+
+
+    {% elseif activity.type.name == 'Bonus Like' %}
+        <div  class='box-comments-item bonus-like'>
+            <div class='box-comments-logo'>
+                {% if review is defined %}
+                    <span class="icon icon-like"></span>
+                {% else %}
+                    <a href='{{ path('casino-review',{id:activity.likedBonus.casino.id,casinoname:activity.likedBonus.casino.slug}) }}'>
+                        <img class="lazyload" src="{{asset(('img/lazy.png'))}}" data-original='{{ activity.likedBonus.casino.logo90 }}' alt='{{ activity.likedBonus.casino.casinoname }}' width="90" height="90">
+                    </a>
+                {% endif %}
+            </div>
+            {% if activity.likedBonus.bonustypes[0] is defined  and  activity.likedBonus.bonustypes[0].name == 'Casino Spins' %}
+                <div class='box-comments-bonus'>
+                    <p class="casino-bonus-freespins"> {{ activity.likedBonus.freespins }} </p>
+                    <p class="casino-bonus-name" itemprop="description"> {{ activity.likedBonus.bonustypes[0].name }} </p>
+                    <p class="casino-bonus-wr">Wr:{{ activity.likedBonus.wr }}</p>
+                </div>
+            {% else %}
+                <div class='box-comments-bonus'>
+                    <p class="casino-bonus-amount">{{ activity.likedBonus.symbol }} {{ activity.likedBonus.maxbonusshow }}</p>
+                    <p class="casino-bonus-name" itemprop="description">{{ activity.likedBonus.bonustypename }}</p>
+                    {% if activity.likedBonus.code|length > 0 %}
+                        <p class="casino-bonus-code">Code:
+                            <span>{{ activity.likedBonus.code|slice(0,13) }}</span>
+                            <span class="code_hover tooltip-btn tooltip-hover" data-toggle="tooltip" data-placement="top" title="Copy to Clipboard">
+                                <span class="copy-code tooltip-btn" data-toggle="tooltip" data-placement="top" title="Code copied to Clipboard" data-trigger="manual">{{ activity.likedBonus.code }}</span>
+                            </span>
+                        </p>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            <div class='box-comments-content' id="live_p{{ activity.id }}">
+                <a href='{{ path('user',{id:activity.userAdded.id,username:activity.userAdded.username}) }}'>
+                    {{ activity.userAdded.username }}
+                </a> &nbspliked&nbsp
+                {% if review is defined %}
+                    {% if activity.casinoLiked %}
+                        {{ activity.casinoLiked.casinoname }}
+                    {% elseif activity.likedBonus %}
+                        {{ activity.likedBonus.casino.casinoname }} bonus
+                    {% endif %}
+                {% else %}
+                    <a href='{{ path('casino-review',{id:activity.likedBonus.casino.id,casinoname:activity.likedBonus.casino.slug}) }}'>
+                        {{ activity.likedBonus.casino.casinoname }} bonus
+                    </a>
+                {% endif %}
+            </div>
+
+            <div class='box-comments-image'>
+                <a href='{{ path('user',{id:activity.userAdded.id,username:activity.userAdded.username}) }}'>
+                    <img height='50' width='50' class="lazyload" src="{{asset(('img/lazy.png'))}}" data-original='{{ activity.userAdded.imagelocation }}' alt='{{ activity.userAdded.username }}'/>
+                </a>
+            </div>
+
+            <div class='box-comments-user'>
+                <div class='box-comments-user-inner'>
+                    <a class="box-comments-username" href='{{ path('user',{id:activity.userAdded.id,username:activity.userAdded.username}) }}'>
+                        {{ activity.userAdded.username }}
+                    </a>
+                    <span class="box-comments-date">{{ activity.timeadded|date('M d,y h:s') }}</span>
+                </div>
+            </div>
+
+        </div>
+
+    {% endif %}
+
+
+{% endfor %}
+
+
+
+
+
+

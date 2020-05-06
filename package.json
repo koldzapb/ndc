@@ -1,0 +1,28 @@
+{
+    "devDependencies": {
+        "@symfony/webpack-encore": "^0.28.2",
+        "autoprefixer": "^9.1.5",
+        "jquery": "^3.4.1",
+        "node-sass": "^4.13.0",
+        "postcss-loader": "^3.0.0",
+        "sass-loader": "^7.1.0",
+        "webpack-notifier": "^1.8.0"
+    },
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.4.1",
+        "ajv": "^6.5.4",
+        "bootstrap": "^4.4.1",
+        "jquery-lazyload": "^1.9.7",
+        "lightbox2": "^2.10.0",
+        "popper.js": "^1.14.4",
+        "slick-carousel": "^1.8.1"
+    }
+}

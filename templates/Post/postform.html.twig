@@ -1,0 +1,18 @@
+<div class="modal" id="post-form-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="tclose" data-dismiss="modal"></div>
+        <div class='modal-dialog-inner'>
+            <form class='post-comment-form' action='' method='post' onsubmit='return false;'>
+                <h3>Post comment to {{ casino.casinoname }}
+                    <a href=''>Post</a>
+                </h3>
+                <div class="form-group">
+                    <textarea aria-label='Comment' placeholder='Comment' name='post_comment' rows='' cols='' id='postcontent' ></textarea>
+                    <div class="post-form-error form-error">Comment should not be blank</div>
+                </div>
+                <input type='submit' value='Post Comment' casinoid='{{ casino.id }}' id='postbutton' class="btn btn-primary btn-shadow" />
+                <p class='clear'></p>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,124 @@
+//Casino bonuses
+.latest-bonus {
+    &-wrapper {
+        @extend .gray-box;
+        @extend .padding-medium;
+        h3 {
+            font-size: 1.7rem;
+            font-weight: 500;
+            font-family: $font-family-base;
+            @include md(up) {
+                margin-bottom: 2rem;
+            }
+            @include md {
+                text-align: center;
+            }
+        }
+    }
+    &-slider {
+        text-align: center;
+        display: none;
+        &.slick-initialized {
+            display: block;
+        }
+        .slick-list {
+            margin: 0 -15px;
+        }
+    }
+    &-item {
+        position: relative;
+        max-width: 255px;
+        margin: 0 auto;
+        background-color: $white;
+        border-radius: 10px;
+        box-shadow: 0 0 15px 5px rgba(204,204,223,0.3);
+        text-align: left;
+        .btn {
+            display: block;
+            width: 100%;
+            border-radius: 0 0 10px 10px;
+            padding: 1rem 0;
+            &-like, &-review {
+                display: inline-block;
+            }
+            &-like {
+                margin-right: 5px;
+            }
+            &-primary:hover {
+                border-color: $white;
+            }
+        }
+        .casino-bonus {
+            color: $fiord;
+            p {
+                margin-bottom: 0;
+            }
+            &-amount {
+                font-size: 2rem;
+                color: $fiord;
+            }
+            &-name {
+                font-size: 0.7rem;
+            }
+        }
+        .comments, .likes {
+            font-size: 1rem;
+            color: $regent_gray;
+        }
+        .comments .icon {
+            width: 17px;
+            height: 14px;
+            background-position: -367px -285px;
+        }
+        .likes .icon {
+            width: 16px;
+            height: 14px;
+            background-position: -367px -319px;
+        }
+    }
+    &-comments {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0;
+    }
+    &-top {
+        background-color: $tiara_50;
+        position: relative;
+        height: 187px;
+        padding: 10px;
+        border-radius: 10px 10px 0 0;
+    }
+    &-bottom {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px;
+        height: 110px;
+    }
+    &-logo {
+        display: table;
+        margin: 0 auto;
+    }
+}
+
+.box-new {
+    font-style: italic;
+    color: $roman;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.casino-bonus-code {
+    position: relative;
+    &:hover .code_hover {
+        opacity: 1;
+    }
+    .copy-code {
+        display: inline-block;
+        padding: 10px 5px;
+        width: 100%;
+    }
+}
+
+.copy-code {
+    cursor: pointer;
+}

@@ -1,0 +1,27 @@
+<html>
+<head>
+</head>
+<body>
+<h2>New No Deposit Has Arrived</h2>
+<p>Bonus Amount:{{ bonus.symbol }} {{ bonus.maxbonusshow }}</p>
+{% if(bonus.code|length > 0) %}
+    <p>Bonus Code: {{ bonus.code }}</p>
+{% endif %}
+{% if users_country!=null and not bonus.restrictedcountries.contains(users_country) and not bonus.casino.countries.contains(users_country) %}
+    <p>Players from {{ users_country.name }} allowed</p>
+{% endif %}
+<p>WR: {{ bonus.wr }}</p>
+<p style="font-size: 8px" >{{ bonus.extraIntable|raw }}</p>
+{% if bonus.tcurl|length>0 %}
+    <p style="font-size: 8px"><a href="{{ bonus.tcurl|raw }}">T&C</a></p>
+{% endif %}
+<p>Copyright © 2019 Nodepositcaisno.org. All rights reserved.
+    Is gambling a problem for you? Visit our help page <a href="https://nodepositcasino.org/gamblinghelp">here</a>.
+    If you don't want to receive this email, please unsubscribe <a href="https://nodepositcasino.org/unsubscribe?user_token={{ user.id }} ">here</a>.
+    Contact us <a href="https://nodepositcasino.org/contact/">here</a>.
+</p>
+<a href="http://www.gamcare.org.uk"><img src="https://nodepositcasino.org/img/FooterImages/gamecare_woo.png" alt="gamcare"></a>
+<a href="https://nodepositcasino.org/disclaimer"><img src="https://nodepositcasino.org/img/FooterImages/18_woo.png" alt="disclaimer"></a>
+<a href="https://www.begambleaware.org/"><img src="https://nodepositcasino.org/img/FooterImages/begambleaware_logo.png" alt="be gamble aware"></a>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?php //%255BApp%255CController%255CNDCController%2523moreLiveActivitiesForCasinoReview%255D%255B1%255D
+
+namespace Symfony\Component\VarExporter\Internal;
+
+return $getExpiry ? PHP_INT_MAX : Hydrator::hydrate(
+    $o = [
+        clone (Registry::$prototypes['Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Route'] ?? Registry::p('Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Route')),
+    ],
+    null,
+    [
+        'Symfony\\Component\\Routing\\Annotation\\Route' => [
+            'path' => [
+                '/moreliveactivitiesrewcas',
+            ],
+            'name' => [
+                'moreliveactivities_for_casino_review',
+            ],
+        ],
+    ],
+    [
+        $o[0],
+    ],
+    []
+);

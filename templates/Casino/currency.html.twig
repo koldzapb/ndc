@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+
+
+    {% block meta_follow %}noindex, nofollow{% endblock %}
+
+    {% block bodyheader %}
+        <div class="header-content">
+            <div class="container">
+                <div class="ad-line">
+                </div><!--/.ad-line-->
+                <h1 class="page-title">{% if currency.heading is not null %}{{ currency.heading }}{% else %}Online casinos that you can gamble with {{ currency.name }}{% endif %}
+                    <span>{{ casinocount }}</span>
+                </h1>
+            </div><!--/.wrap-->
+        </div><!--/#content-header-->
+    {% endblock %}
+
+
+    {% block main %}
+            <div class="text-holder container">
+                <a class="scroll-to-button scroll-to-link" href="#button-link-1">
+                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                </a>
+
+                <span id="button-link-1"></span>
+
+                <div class="list-data">
+                    {{ casinos|raw }}
+                </div>
+            </div>
+    {% endblock %}

@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block bodyheader %}
+    <div class="header-content">
+        <div class="container">
+            <div class="ad-line"></div><!--/.ad-line-->
+            <h1 class="page-title">
+                {% if(page.heading is not null) %}
+                    {{ page.heading|shortCodes }}
+                    {% else %}
+                    {{ software.title }}
+                {% endif %}
+                <span class="total">{{ totalnumber }}</span>
+            </h1>
+        </div><!--/.wrap-->
+    </div><!--/#content-header-->
+{% endblock %}
+
+
+
+{% block main %}
+        {% if page.content is not null %}
+            <div class="container text-holder">
+                <a class="scroll-to-button scroll-to-link show-me" href="#button-link-1">
+                    Show me the ND Bonuses!
+                </a>
+                <div class="page-content">{{ page.content|raw }}</div>
+            </div>
+        {% endif %}
+
+        <div class="container">
+            <div class="casino-list-wrapper {% if page.content|length == 0 %}padding-large{% endif %}">
+                <span id="button-link-1"></span>
+                <div class="d-md-flex justify-content-end">
+                    <div class="spinner filter-spinner">
+                        <div class="rect1"></div>
+                        <div class="rect2"></div>
+                        <div class="rect3"></div>
+                        <div class="rect4"></div>
+                        <div class="rect5"></div>
+                    </div>
+                    <div class="filter-holder">
+                        <span>Sort by</span>
+                        <div class="dropdown d-inline">
+                            <button class="dropdown-toggle dropdown-filter-btn" type="button" data-sorttype="highRating" id="dropdownFilter"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Highest rating
+                            </button>
+                            <div id="bonuses_sort_software" data-country="{{ country.name }}"
+                                 data-software="{{ software.title }}" class="dropdown-menu " aria-labelledby="dropdownFilter">
+                                <a class="dropdown-item" href="#" data-sorttype="highRating" data-text="Highest Rating"
+                                   onclick="return false;">Highest Rating</a>
+                                <a class="dropdown-item" href="#" data-sorttype="lowRating" data-text="Lowest rating"
+                                   onclick="return false;">Lowest Rating</a>
+                                <a class="dropdown-item" href="#" data-sorttype="nameAsc" data-text="A-Z"
+                                   onclick="return false">A-Z</a>
+                                <a class="dropdown-item" href="#" data-sorttype="nameDesc" data-text="Z-A" onclick="return false">Z-A</a>
+                                <a class="dropdown-item" href="#" data-sorttype="highAmount" data-text="Highest Amount" onclick="return false">Highest Amount</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="list-data">
+                    <div class="casinos-list">
+                        {{ bonuseslist|raw }}
+                    </div>
+                </div>
+
+                <div class="list-data-bottom">
+                    <div class="page-load">
+                        <span class="current-no" id="current_casinos">{% if totalnumber<50 %}{{ totalnumber }}{% else %}50{% endif %}</span>/<span id="totalcasinos">{{ totalnumber }}</span>
+                    </div>
+                    {% if totalnumber >50 %}
+                        <div class="list-data-buttons">
+                            <a id="more_bonuses_for_software" first="50" max="50" data-software="{{ software.title }}" data-country="{{ country.name }}" href="" onclick="return false" class="btn btn-orange-outline">Load More</a>
+                            <a id="all_bonuses_for_software" first="50" max="2000" data-software="{{ software.title }}" data-country="{{ country.name }}" href="" onclick="return false" class="btn btn-orange-outline">Load All</a>
+                        </div>
+                        <div id="bottom_spinner" class="spinner">
+                            <div class="rect1"></div>
+                            <div class="rect2"></div>
+                            <div class="rect3"></div>
+                            <div class="rect4"></div>
+                            <div class="rect5"></div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+
+    {% if page.belowcontent is not null %}
+        <div class="text-holder container below-content">
+            {{ page.belowcontent|raw }}
+        </div>
+    {% endif %}
+
+    {{ render(controller(
+        'App\\Controller\\TemplateController::joinContent'
+    ))
+    }}
+
+
+    {{ render(controller(
+        'App\\Controller\\TemplateController::sectionInterest',{'pageTags':page.tags}
+    ))
+    }}
+
+
+{% endblock %}

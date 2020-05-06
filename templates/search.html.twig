@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+    {% block bodyheader %}
+        <div class="header-content">
+
+            <div class="container">
+
+                <div class="ad-line"></div><!--/.ad-line-->
+                <h1 class="page-title">{{ page.heading }}</h1>
+            </div><!--/.wrap-->
+        </div><!--/#content-header-->
+    {% endblock %}
+
+
+    {% block main %}
+        <!-- START MAIN CONTENT-->
+        {% if error is defined %}
+            <div class="text-holder container">
+                <h4>{{ error }}</h4>
+            </div><!--/#content-->
+        {% else %}
+            <div class="text-holder">
+                <a class="scroll-to-button scroll-to-link" href="#button-link-1" aria-label="Scroll to Search results">
+                    <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                </a>
+
+                <div class="list-data container">
+                    <h1>Search results</h1>
+                    <span id="button-link-1"></span>
+                    <div class="casinos-list">
+                        {{ casinos|raw }}
+                    </div>
+                </div>
+            </div><!--/#container-->
+            {% endif %}
+    {% endblock %}

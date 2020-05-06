@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+    {% block bodyheader %}
+        <div class="header-content">
+            <div class="container">
+                <div class="ad-line"></div><!--/.ad-line-->
+                <h1 class="page-title">{{ page.heading }}</h1>
+            </div><!--/.wrap-->
+        </div><!--/#content-header-->
+        {% if page.fullimagelink != null %}
+            <div class="cover-image-holder" style="background: url({{ page.coverimagelocation }}) no-repeat top center;"></div>
+        {% endif %}
+    {% endblock %}
+
+    {% block main %}
+        <div class="container article-text-holder">
+            <div class="row">
+                <div class="col-lg-8 mb-lg-0 mb-4">
+                    {{ page.maintextwithimage|raw }}
+                    {% if page.author %}
+                        <a class="news-author" href="{{ path('author',{"slug":page.author.slug}) }}">Author: {{ page.author.authorname }}</a>
+                    {% endif %}
+                </div>
+                <div class="articles-sidebar col-lg-4">
+                    <div class="latest-news-header">
+                        <h3><span class="icon"></span>Latest news</h3>
+                        <a href="{{ path('news') }}">View all news</a>
+                    </div>
+                    {% for singlenews in latestNews  %}
+                        <div class="article-box">
+                            <div class="article-box-inner">
+                                <div class="article-box-image">
+                                    <a href="{{ path('singlenews',{slug:singlenews.slug}) }}">
+                                        <img class="lazyload" src="{{asset(('img/lazy-360.png'))}}" data-original="{{ singlenews.image360 }}" alt="{{ singlenews.heading }} " width="360" height="220">
+                                    </a>
+                                </div>
+                                <div class="article-box-content">
+                                    <h3>
+                                        <a href="{{ path('singlenews',{slug:singlenews.slug}) }}">{{ singlenews.heading }}</a>
+                                    </h3>
+                                    <p class="article-box-date">{{ singlenews.gmdate }}</p>
+                                    <a class="read-more" href="{{ path('singlenews',{'slug':singlenews.slug}) }}">Read more</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- END MAIN CONTENT-->
+    {% endblock %}
+
+    {% block javascripts %}
+        <script type="application/ld+json">
+        {
+          "@context": "http://schema.org",
+          "@type": "NewsArticle",
+          "author": "{{ page.author.authorname }}",
+          "headline": "{{ page.heading }}",
+          "image": "{{ absolute_url(page.imagelocation) }}",
+          "datePublished": "{{ page.timeadded|date('Y-m-d') }}",
+          "dateModified": "{{ page.lastmodified|date('Y-m-d') }}",
+          "mainEntityOfPage": "{{ app.request.uri }}",
+          "url": "{{ app.request.uri }}",
+          "publisher": {
+            "@type": "Organization",
+            "name": "No Deposit Casino",
+            "url": "https://nodepositcasino.org/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://nodepositcasino.org/img/logo.png",
+                "width": "400",
+                "height": "60"
+            }
+          }
+        }
+        </script>
+    {% endblock %}

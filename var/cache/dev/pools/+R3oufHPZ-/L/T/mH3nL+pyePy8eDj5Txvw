@@ -1,0 +1,34 @@
+<?php //%255BApp%255CEntity%255CCountry%2524restrictedsoftware%255D%255B1%255D
+
+namespace Symfony\Component\VarExporter\Internal;
+
+return $getExpiry ? PHP_INT_MAX : Hydrator::hydrate(
+    $o = [
+        clone (($p = &Registry::$prototypes)['Doctrine\\ORM\\Mapping\\ManyToMany'] ?? Registry::p('Doctrine\\ORM\\Mapping\\ManyToMany')),
+        clone ($p['Doctrine\\ORM\\Mapping\\JoinTable'] ?? Registry::p('Doctrine\\ORM\\Mapping\\JoinTable')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'targetEntity' => [
+                'App\\Entity\\Software',
+            ],
+            'inversedBy' => [
+                'restrictedcountries',
+            ],
+            'cascade' => [
+                [
+                    'persist',
+                ],
+            ],
+            'name' => [
+                1 => 'softwarerestrictedcountries',
+            ],
+        ],
+    ],
+    [
+        $o[0],
+        $o[1],
+    ],
+    []
+);

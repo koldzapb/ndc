@@ -1,0 +1,310 @@
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: 'en'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+                            # fetching services directly from the container via $container->get() won't work.
+                            # The best practice is to be explicit about your dependencies anyway.
+        bind:
+            $geoipDbPath: "%kernel.project_dir%/var/geoip.mmdb"
+            $twitterConsumerKey: "%env(TWITTER_CONSUMER_KEY)%"
+            $twitterConsumerSecret: "%env(TWITTER_CONSUMER_SECRET)%"
+            $twitterRedirectUri: "%env(TWITTER_REDIRECT_URI)%"
+            $facebookAppId: "%env(FACEBOOK_APP_ID)%"
+            $facebookAppSecret: "%env(FACEBOOK_APP_SECRET)%"
+            $facebookRedirectUri: "%env(FACEBOOK_REDIRECT_URI)%"
+            $elasticsearchServer: "%env(ELASTICSEARCH_SERVER)%"
+            $languageIconsWebPath: "/images/language/"
+            $currencyIconsWebPath: "/images/currency/"
+            $countryIconsWebPath: "/images/country/"
+            $casinoLogoImages: "%env(UPLOAD_PATH)%/casino/"
+            $casinoLogoImagesUploadPath: "%kernel.project_dir%/public%env(UPLOAD_PATH)%/casino/"
+            $softwareImagesWebPath: "%env(UPLOAD_PATH)%/software/"
+            $softwareImagesUploadPath: "%kernel.project_dir%/public%env(UPLOAD_PATH)%/software/"
+            $bankingIconsWebPath: "%env(UPLOAD_PATH)%/banking/"
+            $bankingIconsUploadPath: "%kernel.project_dir%/public%env(UPLOAD_PATH)%/banking/"
+            $userImageWebPath: "%env(UPLOAD_PATH)%/user/"
+            $userImageUploadPath: "%kernel.project_dir%/public%env(UPLOAD_PATH)%/user/"
+            $articleWebPath: "%env(UPLOAD_PATH)%/article/"
+            $articleUploadPath: "%kernel.project_dir%/public%env(UPLOAD_PATH)%/article/"
+            $newsCategoryWebPath: "%env(UPLOAD_PATH)%/news-category/"
+            $newsCategoryUploadPath: "%kernel.project_dir%/public%env(UPLOAD_PATH)%/news-category/"
+            $bonusTypeUploadPath: "%kernel.project_dir%/public%env(UPLOAD_PATH)%/bonustypes/"
+            $bonusTypeWebPath: "%env(UPLOAD_PATH)%/bonustypes/"
+            $melanysMail: "%env(MELANYS_MAIL)%"
+            $joshsMail: "%env(JOSHS_MAIL)%"
+            $awebberConsumerKey: "%env(AWEBBER_CONSUMER_KEY)%"
+            $awebberConsumerSecret: "%env(AWEBBER_CONSUMER_SECRET)%"
+            $awebberAccessToken: "%env(AWEBBER_ACCES_TOKEN)%"
+            $awebberAccessSecret: "%env(AWEBBER_ACCES_SECRET)%"
+            $subscribersList: "%env(AWEBBER_SUBSCRIBERS_LIST)%"
+
+
+
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{Entity,Migrations,Tests}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+
+
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    App\Feed\Downloader:
+          arguments: ["%env(FEED_TOKEN)%"]
+
+    admin.casino:
+        class: App\Admin\CasinoAdmin
+        arguments: [~, App\Entity\Casino, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Casino }
+        public: true
+
+    admin.mainpage:
+        class: App\Admin\MainPageAdmin
+        arguments: [~, App\Entity\MainPage, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Main Pages }
+        public: true
+
+
+    admin.article:
+        class: App\Admin\ArticleAdmin
+        arguments: [~, App\Entity\Article, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Article }
+        public: true
+
+
+    admin.user:
+        class: App\Admin\UserAdmin
+        arguments: [~, App\Entity\User, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: User }
+        public: true
+
+    admin.news:
+            class: App\Admin\NewsAdmin
+            arguments: [~, App\Entity\News, ~]
+            tags:
+                - { name: sonata.admin, manager_type: orm, label: News }
+            public: true
+
+
+
+    admin.articlecategory:
+        class: App\Admin\ArticleCategoryAdmin
+        arguments: [~, App\Entity\ArticleCategory, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Article Category }
+        public: true
+
+
+    admin.countrylist:
+        class: App\Admin\CountryListAdmin
+        arguments: [~, App\Entity\CountryList, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Country List }
+        public: true
+
+
+    admin.softwareslist:
+            class: App\Admin\SoftwaresListAdmin
+            arguments: [~, App\Entity\SoftwaresList, ~]
+            tags:
+                - { name: sonata.admin, manager_type: orm, label: Softwares List }
+            public: true
+
+
+    admin.gameslist:
+            class: App\Admin\GamesListAdmin
+            arguments: [~, App\Entity\GamesList, ~]
+            tags:
+                - { name: sonata.admin, manager_type: orm, label: Games List }
+            public: true
+
+    admin.author:
+            class: App\Admin\AuthorAdmin
+            arguments: [~, App\Entity\Author, ~]
+            tags:
+                - { name: sonata.admin, manager_type: orm, label: Author }
+            public: true
+
+
+    admin.bonustype:
+            class: App\Admin\BonusTypeAdmin
+            arguments: [~, App\Entity\BonusType, ~]
+            tags:
+                - { name: sonata.admin, manager_type: orm, label: Bonus Types }
+            public: true
+
+
+    admin.bonusvalue:
+        class: App\Admin\BonusValueAdmin
+        arguments: [~, App\Entity\BonusValue, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Bonus Values Pages }
+        public: true
+
+    admin.software:
+        class: App\Admin\SoftwareAdmin
+        arguments: [~, App\Entity\Software, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Software }
+        public: true
+
+    admin.country:
+        class: App\Admin\CountryAdmin
+        arguments: [~, App\Entity\Country, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Countries }
+        public: true
+
+
+    admin.shortcode:
+        class: App\Admin\ShortCodeAdmin
+        arguments: [~, App\Entity\ShortCode, ~]
+        tags:
+        - { name: sonata.admin, manager_type: orm, label: ShortCodes }
+        public: true
+
+    admin.currency:
+        class: App\Admin\CurrencyAdmin
+        arguments: [~, App\Entity\Currency, ~]
+        tags:
+        - { name: sonata.admin, manager_type: orm, label: Currency pages }
+        public: true
+
+    admin.bonus:
+      class: App\Admin\BonusAdmin
+      arguments: [~, App\Entity\Bonus, ~]
+      tags:
+        - { name: sonata.admin, manager_type: orm, label: Bonuses }
+      public: true
+
+    admin.contactus:
+        class: App\Admin\ContactUsAdmin
+        arguments: [~, App\Entity\ContactUs, ~]
+        tags:
+          - { name: sonata.admin, manager_type: orm, label: Contact Mails }
+        public: true
+
+
+
+
+
+
+
+
+    App\EntityListener\ArticleListener:
+        tags:
+          - { name: doctrine.orm.entity_listener, entity: App\Entity\Article, event: preFlush }
+          - { name: doctrine.orm.entity_listener, entity: App\Entity\Article, event: postLoad }
+
+
+    App\EntityListener\NewsListener:
+        tags:
+          - { name: doctrine.orm.entity_listener, entity: App\Entity\News, event: preFlush }
+          - { name: doctrine.orm.entity_listener, entity: App\Entity\News, event: postLoad }
+
+
+
+    App\EntityListener\CasinoListener:
+        tags:
+          - { name: doctrine.orm.entity_listener, entity: App\Entity\Casino, event: postLoad , lazy: true }
+          - { name: doctrine.orm.entity_listener, entity: App\Entity\Casino, event: preUpdate , lazy: true }
+
+
+    App\EntityListener\ArticleCategoryListener:
+        tags:
+          - { name: doctrine.orm.entity_listener, entity: App\Entity\ArticleCategory, event: preFlush }
+          - { name: doctrine.orm.entity_listener, entity: App\Entity\ArticleCategory, event: postLoad }
+
+    App\EntityListener\SoftwareListener:
+        tags:
+          - { name: doctrine.orm.entity_listener, entity: App\Entity\Software, event: postLoad }
+
+    App\EntityListener\ScreenshotListener:
+        tags:
+          - { name: doctrine.orm.entity_listener, entity: App\Entity\Screenshot, event: postLoad }
+
+    App\EntityListener\CurrencyListener:
+        tags:
+          - { name: doctrine.orm.entity_listener, entity: App\Entity\Currency, event: postLoad }
+
+    App\EntityListener\BankingListener:
+        tags:
+          - { name: doctrine.orm.entity_listener, entity: App\Entity\Banking, event: postLoad }
+
+    App\EntityListener\LanguageListener:
+        tags:
+          - { name: doctrine.orm.entity_listener, entity: App\Entity\Language, event: postLoad }
+
+    App\EntityListener\UserListener:
+        tags:
+          - { name: doctrine.orm.entity_listener, entity: App\Entity\User, event: preFlush }
+          - { name: doctrine.orm.entity_listener, entity: App\Entity\User, event: postLoad }
+          - { name: doctrine.orm.entity_listener, entity: App\Entity\User, event: preUpdate }
+
+
+
+    App\EntityListener\CountryListListener:
+        tags:
+          - { name: doctrine.orm.entity_listener, entity: App\Entity\CountryList, event: preFlush }
+
+
+    App\EntityListener\SoftwaresListListener:
+        tags:
+          - { name: doctrine.orm.entity_listener, entity: App\Entity\SoftwaresList, event: preFlush }
+
+    App\EntityListener\GamesListListener:
+        tags:
+          - { name: doctrine.orm.entity_listener, entity: App\Entity\GamesList, event: preFlush }
+    App\EntityListener\BonusListener:
+      tags:
+        - { name: doctrine.orm.entity_listener, entity: App\Entity\Bonus, event: prePersist }
+
+    App\EventListener\ArticleRedirectListener:
+        tags:
+          - { name: kernel.event_listener, event: kernel.exception }
+
+    App\EventListener\NotAuthorizedListener:
+        tags:
+          - { name: kernel.event_listener, event: kernel.exception }
+
+    App\EntityListener\BonusTypeListener:
+        tags:
+          - { name: doctrine.orm.entity_listener, entity: App\Entity\BonusType, event: preFlush }
+          - { name: doctrine.orm.entity_listener, entity: App\Entity\BonusType, event: postLoad }
+
+    App\EntityListener\CountryListener:
+      tags:
+        - { name: doctrine.orm.entity_listener, entity: App\Entity\Country, event: postLoad }
+
+    App\Feed\ImportManager:
+        arguments: [!tagged app.feed.importers]
+
+    bonus.importance:
+        class: App\Utils\BonusImportance
+
+    App\EventListener\LoginListener:
+      tags:
+        - { name: 'kernel.event_listener', event: 'security.interactive_login' }
+
+    App\BonusRendering\BonusRenderManager:
+        arguments: [!tagged app.bonus.renderers]

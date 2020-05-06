@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+
+    {% block bodyheader %}
+        <div class="header-content">
+            <div class="container">
+                <div class="ad-line">
+                </div><!--/.ad-line-->
+                <h1 class="page-title">{{ page.heading }}</h1>
+            </div><!--/.wrap-->
+        </div><!--/#content-header-->
+    {% endblock %}
+
+
+    {% block main %}
+        <div class="text-holder container">
+            <a class="scroll-to-button scroll-to-link" href="#button-link-1" aria-label="Scroll to Privacy policy">
+                <i class="fas fa-arrow-down" aria-hidden="true"></i>
+            </a>
+            <span id="button-link-1"></span>
+            {{ page.content|raw }}
+        </div>
+        <!-- END MAIN CONTENT-->
+    {% endblock %}

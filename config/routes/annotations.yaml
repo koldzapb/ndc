@@ -1,0 +1,38 @@
+article:
+    resource: ../../src/Controller/ArticleController.php
+    type: annotation
+
+bonus:
+    resource: ../../src/Controller/BonusController.php
+    type: annotation
+
+casino:
+    resource: ../../src/Controller/CasinoController.php
+    type: annotation
+
+ndc:
+    resource: ../../src/Controller/NDCController.php
+    type: annotation
+
+post:
+    resource: ../../src/Controller/PostController.php
+    type: annotation
+
+security:
+    resource: ../../src/Controller/SecurityController.php
+    type: annotation
+
+
+
+admin:
+    resource: ../../vendor/sonata-project/admin-bundle/src/Controller/CRUDController.php
+    type: annotation
+
+
+other:
+    resource: ../../src/Controller/OtherPagesController.php
+    type: annotation
+
+
+
+

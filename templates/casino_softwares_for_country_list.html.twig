@@ -1,0 +1,31 @@
+{% set i=0 %}
+{% for software in softwares %}
+    {% set i=i+1 %}
+    {% set softwaresLength = softwares|length %}
+    {% if i < 4 or softwaresLength == 4 %}
+        <img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQIHWO4/+INAAVdArRD1D4LAAAAAElFTkSuQmCC"
+     data-original='{{ software.image25 }}' style='opacity:{% if(software.restrictedcountries.contains(country)) %}0.3{% else %}1{% endif %}' alt='Powered By {{ software.title }}' title='Powered By {{ software.title }}' width="25" height="15" class="lazyload">
+    {% endif %}
+
+    {%  if i==4 and softwaresLength >4   %}
+        {% set softwaresNum=softwaresLength - 3 %}
+        {% if casinosPage is defined %}
+            <div class='more-softwares'>+{{ softwaresNum }}
+            <div class='softwares_hover'>
+            {% else %}
+            <div class='more-softwares'>+{{ softwaresNum }}
+                <div class='softwares_hover softwares_hoverSlide'>
+            {% endif %}
+    {% endif %}
+
+
+    {% if i>=4 and softwaresLength > 4 %}
+        <img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQIHWO4/+INAAVdArRD1D4LAAAAAElFTkSuQmCC"
+     data-original='{{ software.image25 }}' style='opacity:{% if(software.restrictedcountries.contains(country)) %}0.3{% else %}1{% endif %}' alt='Powered By {{ software.title }}' title='Powered By {{ software.title }}' width="25" height="15" class="lazyload">
+    {% endif %}
+
+    {% if softwaresLength >4 and i==softwaresLength %}
+                </div>
+            </div>
+    {% endif %}
+{% endfor %}

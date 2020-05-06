@@ -1,0 +1,35 @@
+<div class='modal-dialog-inner'>
+    <h3>Edit Your Personal Info</h3>
+    <form id='updateform' action='' method='post' enctype='multipart/form-data' >
+        <div class="form-group">
+            <div class='updateImage' style="background-image: url('{{ app.user.imagelocation }}'); background-position: center;">
+                <input type='file' name='userimage' class='upload' style='margin-bottom:0;  '/>
+            </div>
+        </div>
+        <div class="form-group">
+            <input aria-label='Username *' placeholder='Username *' type='text' name='reg_username' id='update_username' value='{{ app.user.username }}'/>
+        </div>
+        <div class="form-group">
+            <input aria-label='Email *' placeholder='Email *' type='text' name='reg_email' id='update_email' value='{{ app.user.email }}' />
+        </div>
+        <div class="form-group">
+            <select class='gender' name='gender'>
+                <option label='Male' {% if(app.user.male == 1) %} {{ 'selected' }} {% endif %} > Male </option>
+                <option label='Female' {% if(app.user.male != 1) %} {{ 'selected' }} {% endif %} > Female </option>
+            </select>
+        </div>
+        <p id='update_error'></p>
+        <div class="form-group form-group-checkbox">
+            <input class='regular-checkbox' type='checkbox' name='reg_newsletter_update'  id='reg_newsletter_update' {% if(app.user.newsletter == 1) %} {{ 'checked' }}{% endif %} />
+            <label for="reg_newsletter_update">I Would Like To Receive Newsletter Update & New No Deposit Alerts</label>
+        </div>
+        <div class="buttons-holder">
+            <input type='submit' name='submit' value='save changes' class="btn btn-primary btn-shadow">
+            <input id='cancel_update' type='submit' name='submit' value='cancel changes' class='btn btn-light btn-shadow'>
+        </div>
+    </form>
+    <p class="login-register"> To change your password click <a href='#'> Here </a> </p>
+</div>
+
+
+

@@ -1,0 +1,134 @@
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    <div class="modal" id="edit-info" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="tclose" data-dismiss="modal"></div>
+            <div class='modal-dialog-inner'>
+                <h3>Edit Your Personal Info</h3>
+                <form id='updateform' action='' method='post' enctype='multipart/form-data' >
+                    <div class="form-group">
+                        <div class='updateImage' style="background-image: url('{{ app.user.imagelocation }}');  background-position: center;">
+                            <input type='file' name='userimage' class='upload' style='margin-bottom:0;  '/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input aria-label='Username *' placeholder='Username *' type='text' name='reg_username' id='update_username' value='{{ app.user.username }}'/>
+                    </div>
+                    <div class="form-group">
+                        <input aria-label='Email *' placeholder='Email *' type='text' name='reg_email' id='update_email' value='{{ app.user.email }}' />
+                    </div>
+                    <div class="form-group">
+                        <select class='gender' name='gender'>
+                            <option label='Male' {% if(app.user.male == 1) %} {{ 'selected' }} {% endif %} > Male </option>
+                            <option label='Female' {% if(app.user.male != 1) %} {{ 'selected' }} {% endif %} > Female </option>
+                        </select>
+                    </div>
+                    <p id='update_error'></p>
+                    <div class="form-group form-group-checkbox">
+                        <input class='regular-checkbox' type='checkbox' name='reg_newsletter_update'  id='reg_newsletter_update' {% if(app.user.newsletter == 1) %} {{ 'checked' }}{% endif %} />
+                        <label for="reg_newsletter_update">I Would Like To Receive Newsletter Update  & New No Deposit Alerts </label>
+                    </div>
+                    <div class="buttons-holder">
+                        <input type='submit' name='submit' value='save changes' class="btn btn-primary btn-shadow">
+                        <input id='cancel_update' type='submit' name='submit' value='cancel changes' class='btn btn-light btn-shadow'>
+                    </div>
+                </form>
+                <div class="edit_reset_password_profile">
+                    <p class="login-register"> To change your password click <a id="edit_reset_password" href='#'> Here </a> </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+<div class="modal" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="tclose" data-dismiss="modal"></div>
+
+        <div class='modal-dialog-inner'>
+            <h3>Log In To Your Account</h3>
+            <div class="form-group">
+                <input aria-label='Username' placeholder='Username' type='text' id='login_username' />
+            </div>
+            <div class="form-group">
+                <input aria-label='Password' placeholder='Password' type='password' id='login_password' />
+            </div>
+            <p id='login_error'>Invalid username or password</p>
+            <div class="form-group">
+                <a href="#" class='btn btn-primary btn-shadow' id='loginbutton'>Login </a>
+            </div>
+            <div class="reset_password_profile">
+                <p class='pass-reset'>Forgot your password?<br> <a id="reset_password" href='#' onclick="return false;">Reset password</a></p>
+            </div>
+            <div class="social-log">
+                <div class='social-text'>Log In With Your Social Media Account</div>
+                <div class='social'>
+                    <li>
+                        <a class='s-facebook' href='{{socialregister.loginUrl}}'  aria-label="facebook"><i class='fab fa-facebook-f' aria-hidden='true'></i></a>
+                    </li>
+                    <li>
+                        <div class="g-signin2 s-gplus" {% if not is_granted('IS_AUTHENTICATED_FULLY') %}data-onsuccess="onSignIn"{% endif %}></div>
+                    </li>
+                    <li>
+                        <a class='s-twitter' href='{{socialregister.url}}'  aria-label="twitter"><i class='fab fa-twitter' aria-hidden='true'></i></a>
+                    </li>
+                </div>
+            </div>
+            <p class='login-register'>Dont Have an Account? <a href='#' onclick='return false;' data-dismiss="modal" data-toggle="modal" data-target="#registerModal">Register for free</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal" id="registerModal" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="tclose" data-dismiss="modal"></div>
+        <div class='modal-dialog-inner'>
+            <h3>Register Your Account</h3>
+            <div class="form-group">
+                <input aria-label='Username *' placeholder='Username *' type='text' name='reg_username' id='reg_username' value='' required/>
+            </div>
+            <div class="form-group">
+                <input aria-label='Email *' placeholder='Email *' type='text' name='reg_email' id='reg_email' value='' required/>
+            </div>
+            <div class="form-group">
+                <input aria-label='Password *' placeholder='Password *' type='password' name='reg_password' id='reg_password' required/>
+            </div>
+            <div class="form-group">
+                <input aria-label='Confirm Password *' placeholder='Confirm Password *' type='password' name='reg_password2' id='reg_password2' required/>
+            </div>
+            <p id='register_error'></p>
+            <div class="form-group">
+                <button id='registerbutton' class='btn btn-primary btn-shadow'>Register</button>
+            </div>
+            <div class="form-group form-group-checkbox terms-checkbox">
+                <input id="reg_terms" type="checkbox" name="reg_terms" required>
+                <label for="reg_terms">I agree with No Deposit Casino <a href='/terms-and-conditions'>Terms&Conditions</a></label>
+                <p id='terms_error' class="form-error">Please accept Terms&Conditions to register</p>
+            </div>
+            <div class="form-group form-group-checkbox">
+                <input id="reg_newsletter" type="checkbox" name="reg_newsletter">
+                <label for="reg_newsletter">
+                    Receive Weekly Newsletter & New No Deposit Alerts<br/>
+                    <small>Our newsletter contains the latest no deposit offers and codes.</small>
+                </label>
+            </div>
+            <div class="social-log">
+                <div class='social-text'>or Register With Your Social Media Account</div>
+                <div class='social'>
+                    <li>
+                        <a class='s-facebook' href='{{socialregister.loginUrl}}' aria-label="facebook"><i class='fab fa-facebook-f' aria-hidden='true'></i></a>
+                    </li>
+                    <li>
+                        <div class="g-signin2 s-gplus"  {% if not is_granted('IS_AUTHENTICATED_FULLY') %}data-onsuccess="onSignIn"{% endif %}></div>
+                    </li>
+                    <li>
+                        <a class='s-twitter' href='{{socialregister.url}}' aria-label="twitter"><i class='fab fa-twitter' aria-hidden='true'></i></a>
+                    </li>
+                </div>
+            </div>
+            <p class='login-register'>Already a User? <a href='#' data-dismiss="modal" data-toggle="modal" data-target="#loginModal">Log In</a>
+            </p>
+        </div>
+    </div>
+</div>

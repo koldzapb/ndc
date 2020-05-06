@@ -1,0 +1,22 @@
+{% for article in articles %}
+    <div class="article-box col-lg-6">
+        <div class="article-box-inner">
+            <div class="article-box-image">
+                <a href="{{ path('article',{slug:article.slug}) }}">
+                    <img class="lazyload" src="{{asset(('img/lazy-360.png'))}}" data-original="{{ article.image360 }}" alt="{{ article.heading }}" width="360" height="220">
+                </a>
+            </div>
+            <div class="article-box-content">
+                <h3>
+                    <a href="{{ path('article', { slug: article.slug }) }}">{{ article.heading }}</a>
+                </h3>
+                <p class="article-box-date">{{ article.gmdate }}</a>
+                <p class="article-box-descr">{{ article.introtext|raw }}</p>
+                <div class="d-flex justify-content-between">
+                    <a class="read-more" href="{{ path('article', { slug: article.slug }) }}">Read more</a>
+                    <span class="views-no"><span class="icon"></span>{{ article.totalviews }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}

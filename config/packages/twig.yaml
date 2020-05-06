@@ -1,0 +1,7 @@
+twig:
+    paths: ['%kernel.project_dir%/templates']
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    globals:
+        bonus_importance: '@bonus.importance'
+        new_google_client_id: '%env(NEW_GOOGLE_CLIENT_ID)%'

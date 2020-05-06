@@ -1,0 +1,96 @@
+<div class="latest-news-section">
+    <a class="scroll-to-button scroll-to-link" href="#button-link-4" aria-label="Scroll to Latest news">
+        <i class="fas fa-arrow-down" aria-hidden="true"></i>
+    </a>
+    <div class="articles-holder container" id="button-link-4">
+        <div class="latest-news-header">
+            <h2>Latest News</h2>
+            <a class="btn btn-primary" href="{{ path('news') }}">View all news</a>
+        </div>
+        <div class="row">
+            {% set counter=0 %}
+            {% for singlenews in news  %}
+                {% set counter=counter+1 %}
+                <div itemscope itemtype="http://schema.org/NewsArticle" class="article-box col-lg-4 col-sm-6 col-12 {% if counter==3 %} {{ 'd-none d-lg-block' }} {% endif %} ">
+                    <meta  itemprop="image" content="{{ absolute_url(singlenews.image360) }}" />
+                    <meta  itemprop="mainEntityOfPage" content="{{ absolute_url(path('singlenews',{slug:singlenews.slug})) }}" />
+                    <meta  itemprop="url" content="{{ absolute_url(path('singlenews',{slug:singlenews.slug})) }}" />
+                    <meta itemprop="datePublished" content="{{ singlenews.timeadded|date('Y-m-d') }}" />
+                    <meta itemprop="dateModified" content="{{ singlenews.lastmodified|date('Y-m-d') }}" />
+                    <div class="article-box-inner">
+                        <div class="article-box-image">
+                            <a href="{{ path('singlenews',{slug:singlenews.slug}) }}">
+                                <img class="lazyload" src="{{asset(('img/lazy-360.png'))}}" data-original="{{ singlenews.image360 }}" alt="{{ singlenews.heading }} " width="360" height="220">
+                            </a>
+                        </div>
+                        <div class="article-box-content">
+                            <h3>
+                                <a href="{{ path('singlenews',{slug:singlenews.slug}) }}"><span itemprop="headline">{{ singlenews.heading }}</span></a>
+                            </h3>
+                            <p class="article-box-date">{{ singlenews.gmdate }}</p>
+                            {% if singlenews.author %}
+                                <p class="article-box-author">author: <a href="{{ path('author',{"slug":singlenews.author.slug}) }}"><span itemprop="author">{{ singlenews.author.authorname }}</span></a></p>
+                            {% endif %}
+                            <p class="article-box-descr">{{ singlenews.introtext|raw }}</p>
+                            <a class="read-more" href="/news/{{ singlenews.slug }}">Read more</a>
+                        </div>
+                    </div>
+                    <div class="d-none" itemprop="publisher" itemscope itemtype="https://schema.org/Organization" >
+                        <div class="d-none" itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+                            <img src="https://nodepositcasino.org/img/logo.svg"/>
+                            <meta itemprop="url" content="https://nodepositcasino.org/img/logo.png">
+                            <meta itemprop="width" content="400">
+                            <meta itemprop="height" content="60">
+                        </div>
+                        <meta itemprop="name" content="No Deposit Casino">
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="articles-holder container" id="button-link-4">
+        <div class="latest-news-header">
+            <h2>Latest Articles</h2>
+            <a class="btn btn-primary" href="{{ path('articles') }}">View all Articles</a>
+        </div>
+        <div class="row">
+            {% set counter=0 %}
+            {% for article in articles  %}
+                {% set counter=counter+1 %}
+                <div itemscope itemtype="http://schema.org/NewsArticle" class="article-box col-lg-4 col-sm-6 col-12 {% if counter==3 %} {{ 'd-none d-lg-block' }} {% endif %} ">
+                    <meta  itemprop="image" content="{{ absolute_url(article.image360) }}" />
+                    <meta  itemprop="mainEntityOfPage" content="{{ absolute_url(path('article',{slug:article.slug})) }}" />
+                    <meta  itemprop="url" content="{{ absolute_url(path('article',{slug:article.slug})) }}" />
+                    <meta itemprop="datePublished" content="{{ article.timeadded|date('Y-m-d') }}" />
+                    <meta itemprop="dateModified" content="{{ article.lastmodified|date('Y-m-d') }}" />
+                    <div class="article-box-inner">
+                        <div class="article-box-image">
+                            <a href="{{ path('article',{slug:article.slug}) }}">
+                                <img class="lazyload" src="{{asset(('img/lazy-360.png'))}}" data-original="{{ article.image360 }}" alt="{{ article.heading }} " width="360" height="220">
+                            </a>
+                        </div>
+                        <div class="article-box-content">
+                            <h3>
+                                <a href="{{ path('article',{slug:article.slug}) }}"><span itemprop="headline">{{ article.heading }}</span></a>
+                            </h3>
+                            <p class="article-box-date">{{ article.gmdate }}</p>
+
+                            <p class="article-box-descr">{{ article.introtext|raw }}</p>
+                            <a class="read-more" href="{{ path('article',{slug:article.slug}) }}">Read more</a>
+                        </div>
+                    </div>
+                    <div class="d-none" itemprop="publisher" itemscope itemtype="https://schema.org/Organization" >
+                        <div class="d-none" itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+                            <img src="https://nodepositcasino.org/img/logo.svg"/>
+                            <meta itemprop="url" content="https://nodepositcasino.org/img/logo.png">
+                            <meta itemprop="width" content="400">
+                            <meta itemprop="height" content="60">
+                        </div>
+                        <meta itemprop="name" content="No Deposit Casino">
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

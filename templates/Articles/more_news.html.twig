@@ -1,0 +1,39 @@
+{% for singlenews in news  %}
+    <div itemscope itemtype="http://schema.org/NewsArticle" class="article-box col-lg-6">
+        <meta  itemprop="image" content="{{ absolute_url(singlenews.image360) }}" />
+        <meta  itemprop="mainEntityOfPage" content="{{ absolute_url(path('singlenews',{slug:singlenews.slug})) }}" />
+        <meta  itemprop="url" content="{{ absolute_url(path('singlenews',{slug:singlenews.slug})) }}" />
+        <meta itemprop="datePublished" content="{{ singlenews.timeadded|date('Y-m-d') }}" />
+        <meta itemprop="dateModified" content="{{ singlenews.lastmodified|date('Y-m-d') }}" />
+
+        <div class="article-box-inner">
+            <div class="article-box-image">
+                <a href="{{ path('singlenews',{slug:singlenews.slug}) }}">
+                    <img class="lazyload" src="{{asset(('img/lazy-360.png'))}}" data-original="{{ singlenews.image360 }}" alt="{{ singlenews.heading }}" width="360" height="220">
+                </a>
+            </div>
+            <div class="article-box-content">
+                <h3>
+                    <a href="{{ path('singlenews', { slug: singlenews.slug }) }}"><span itemprop="headline">{{ singlenews.heading }}</span></a>
+                </h3>
+                <p class="article-box-date">{{ singlenews.gmdate }}</p>
+                {% if singlenews.author %}
+                    <p class="article-box-author">author: <a href="{{ path('author',{"slug":singlenews.author.slug}) }}"><meta itemprop="author" content="{{ singlenews.author.authorname }}">{{ singlenews.author.authorname }}</a></p>
+                {% endif %}
+                <p class="article-box-descr">{{ singlenews.introtext|raw }}</p>
+                <div class="d-flex justify-content-between">
+                    <a class="read-more" href="{{ path('singlenews', { slug: singlenews.slug }) }}">Read more</a>
+                </div>
+            </div>
+        </div>
+        <div class="d-none" itemprop="publisher" itemscope itemtype="https://schema.org/Organization" >
+            <div class="d-none" itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+                <img src="https://nodepositcasino.org/img/logo.png"/>
+                <meta itemprop="url" content="https://nodepositcasino.org/img/logo.png">
+                <meta itemprop="width" content="400">
+                <meta itemprop="height" content="60">
+            </div>
+            <meta itemprop="name" content="No Deposit Casino">
+        </div>
+    </div>
+{% endfor %}

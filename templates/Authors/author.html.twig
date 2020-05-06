@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ author.authorname }} - NDC Author profile page{% endblock %}
+{% block metaDescription %}Information about {{ author.authorname }} - NDC Author{% endblock %}
+{% block ogtitle %}{{ author.authorname }} - NDC Author profile page{% endblock %}
+{% block ogdescription %}Information about {{ author.authorname }} - NDC Author{% endblock %}
+{% block metakeywords %}authors{% endblock %}
+
+
+    {% block bodyheader %}
+        <div class="header-content">
+            <div class="container">
+                <div class="ad-line"></div><!--/.ad-line-->
+                <h1 class="page-title">{{ author.authorname }}</h1>
+            </div><!--/.wrap-->
+        </div><!--/#content-header-->
+    {% endblock %}
+
+    {% block main %}
+        <div class="container article-text-holder">
+            <div class="row">
+                <div class="articles-holder col-md-8">
+                    <div class="author-bio mb-4">
+                        {{ author.bio|raw }}
+                    </div>
+                    <div class="row" id="news_holder_ajax">
+                        {% for singlenews in author.news  %}
+                            <div class="article-box col-lg-6">
+                                <div class="article-box-inner">
+                                    <div class="article-box-image">
+                                        <a href="{{ path('singlenews',{slug:singlenews.slug}) }}">
+                                            <img class="lazyload" src="{{asset(('img/lazy-360.png'))}}" data-original="{{ singlenews.image360 }}" alt="{{ singlenews.heading }}" width="360" height="220">
+                                        </a>
+                                    </div>
+                                    <div class="article-box-content">
+                                        <h3>
+                                            <a href="{{ path('singlenews', { slug: singlenews.slug }) }}">{{ singlenews.heading }}</a>
+                                        </h3>
+                                        <p class="article-box-date">{{ singlenews.gmdate }}</a>
+                                        <p class="article-box-author">author: {{ author.authorname }}</p>
+                                        <p class="article-box-descr">{{ singlenews.introtext|raw }}</p>
+                                        <div class="d-flex justify-content-between">
+                                            <a class="read-more" href="{{ path('singlenews', { slug: singlenews.slug }) }}">Read more</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="articles-sidebar col-lg-4">
+                    <div class="latest-news-header">
+                        <h3><span class="icon"></span>Latest news</h3>
+                        <a href="{{ path('news') }}">View all news</a>
+                    </div>
+                    {% for singlenews in latestNews  %}
+                        <div class="article-box">
+                            <div class="article-box-inner">
+                                <div class="article-box-image">
+                                    <a href="{{ path('singlenews',{slug:singlenews.slug}) }}">
+                                        <img class="lazyload" src="{{asset(('img/lazy-360.png'))}}" data-original="{{  singlenews.image360 }}" alt="{{ singlenews.heading }} " width="360" height="220">
+                                    </a>
+                                </div>
+                                <div class="article-box-content">
+                                    <h3>
+                                        <a href="{{ path('singlenews',{slug:singlenews.slug}) }}">{{ singlenews.heading }}</a>
+                                    </h3>
+                                    <p class="article-box-date">{{ singlenews.gmdate }}</p>
+                                    <a class="read-more" href="{{ path('singlenews',{'slug':singlenews.slug}) }}">Read more</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- END MAIN CONTENT-->
+    {% endblock %}
+
+{% block mainSchemaParameters %}
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "WebPage",
+        "name": "{{ author.authorname }} - NDC Author profile page",
+        "description": "Information about {{ author.authorname }} - NDC Author",
+        "publisher": {
+            "@type": "Organization",
+            "name": "No Deposit Casino"
+        }
+    }
+    </script>
+{% endblock %}

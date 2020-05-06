@@ -1,0 +1,114 @@
+<div class="casino-list-bonuses">
+    {% for bonus in bonuses %}
+        <div itemscope itemtype="http://schema.org/Offer">
+            <meta itemprop="url" content='{{ absolute_url(path("casino-review",{"id":bonus[0].casino.id,"casinoname":bonus[0].casino.slug})) }}' />
+            <meta itemprop="name" content="{{ bonus[0].casino.casinoname }}" />
+            <div class='casino-list-row'>
+
+                <div class='casino-logo no-border casino-list-item'>
+                    <span class="flag">
+                        <img src='{{ country.imgSrc }}' alt="{{ country.name }}" width="16" height="11">
+                    </span>
+                    <a href='{{ path('visit_casino',{id:bonus[0].casino.id}) }}' title='{{ bonus[0].casino.casinoname }}' rel='noopener nofollow' target='_blank'>
+                        <img src="{{asset(('img/lazy.png'))}}" data-original='{{ bonus[0].casino.logo90 }}' title='{{ bonus[0].casino.casinoname }}'  alt='{{ bonus[0].casino.casinoname }}' width="90" height="90" class="lazyload">
+                    </a>
+                    {% if bonus[0].exclusive==1 %}
+                        <span class='box-exclusive'>Exclusive</span>
+                    {% endif %}
+                </div>
+
+                {% if (bonus[0].casino.likes|length >1 or bonus[0].casino.posts|length >1 )  %}
+                    <div class='casino-list-item hidden-cell casino-comments'>
+                        {% if bonus[0].casino.posts|length >1 %}
+                            <span class='comments-no'><span class="icon"></span>{{ bonus[0].casino.posts|length }} Comments</span>
+                        {% endif %}
+                        {% if bonus[0].casino.likes|length >1 %}
+                            <span class="likes-no"><span class="icon"></span><span class="no">{{ bonus[0].casino.likes|length }}</span> Likes</span>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <div class="casino-list-item casino-no-comments"></div>
+                {% endif %}
+
+                {% if bonus[0].bonustypes[0] is defined  and  bonus[0].bonustypes[0].name == 'Casino Spins' %}
+                    <div class='casino-list-item casino-bonus'>
+                        <p class="casino-bonus-freespins"> {{ bonus[0].freespins }} </p>
+                        <p class="casino-bonus-name" itemprop="description"> {{ bonus[0].bonustypes[0].name }} </p>
+                        <p class="casino-bonus-wr">Wr:{{ bonus[0].wr }}</p>
+                    </div>
+                {% else %}
+                    <div class='casino-list-item casino-bonus'>
+                        <p class="casino-bonus-amount">{{ bonus[0].symbol }} {{ bonus[0].maxbonusshow }}</p>
+                        <p class="casino-bonus-name" itemprop="description">{{ bonus[0].bonustypename }}</p>
+                        {% if bonus[0].code|length > 0 %}
+                            <p class="casino-bonus-code">Code:
+                                <span>{{ bonus[0].code|slice(0,13) }}</span>
+                                <span class="code_hover tooltip-btn tooltip-hover" data-toggle="tooltip" data-placement="top" title="Copy to Clipboard">
+                                    <span class="copy-code tooltip-btn" data-toggle="tooltip" data-placement="top" title="Code copied to Clipboard" data-trigger="manual">{{ bonus[0].code }}</span>
+                                </span>
+                            </p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+
+                <div class='casino-list-item casino-rating hidden-cell'>
+                    <p class='cell-subtitle'>Rating</p>
+                    <p class='casino-rating-value'><span>{{ bonus[0].casino.averagerating }}</span>/5</p>
+                    <div class='progress'>
+                        <span class='progress-bar' role='progressbar' style='width: {{ bonus[0].casino.ratingpercent }}%;' aria-valuenow='{{ bonus[0].casino.ratingpercent }}' aria-valuemin='0' aria-valuemax='100'>
+                        </span>
+                    </div>
+                </div>
+
+
+                <div class='casino-list-item casino-powered-by hidden-cell'>
+                    <p class='cell-subtitle'>Powered By</p>
+                    {% for software in bonus[1] %}
+                        <img class="lazyload" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQIHWO4/+INAAVdArRD1D4LAAAAAElFTkSuQmCC"
+         data-original='{{ software.image25 }}' style='opacity:{% if (software.availableincountry == 1) %}{{ '1' }}{% else %}{{ '0.3' }}{% endif %}' width="25" height="15" alt="{{ software.title }}">
+                    {% endfor %}
+                    {% if bonus[2]|length == 1  %}
+                        <img class="lazyload" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQIHWO4/+INAAVdArRD1D4LAAAAAElFTkSuQmCC"
+         data-original='{{ bonus[2][0].image25 }}' style='opacity:{% if (bonus[2][0].availableincountry == 1) %}{{ '1' }}{% else %}{{ '0.3' }}{% endif %}' alt="{{ bonus[2][0].title }}">
+                    {% elseif bonus[2]|length > 1 %}
+                        <div class='more-softwares'>+{{ bonus[2]|length }}
+                            <div class='softwares_hover'>
+                                {% for hoversoftware in bonus[2] %}
+                                    <img  class="lazyload" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQIHWO4/+INAAVdArRD1D4LAAAAAElFTkSuQmCC"
+         data-original='{{ hoversoftware.image25 }}' style='opacity:{% if (hoversoftware.availableincountry == 1) %}{{ '1' }}{% else %}{{ '0.3' }}{% endif %}' width="25" height="15" alt="{{ hoversoftware.title }}">
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+
+
+                <div class='casino-list-item casino-review hidden-cell'>
+                    <a href='#' class='btn-like tooltip-btn' data-toggle='tooltip' data-placement='top' title='Like' onclick='return false;' data-bonus='{{ bonus[0].id }}' aria-label="Like"></a>
+                    <a href='{{ path('casino-review',{id:bonus[0].casino.id , casinoname:bonus[0].casino.slug }) }}' class='btn-review tooltip-btn' data-toggle='tooltip' data-placement='top' title='Read Review' aria-label="Read Review"></a>
+                </div>
+
+                <div class='no-border casino-list-item casino-link' itemscope itemprop="seller" itemtype="http://schema.org/Organization">
+                    <meta itemprop="name" content="{{ bonus[0].casino.casinoname }}" />
+                    <meta itemprop="url" content="{{ absolute_url(path('visit_casino',{id:bonus[0].casino.id})) }}" />
+                    <a class='show-hidden-cells' href="#" aria-label="Show hidden"></a>
+                    <a href='{{ path('visit_casino',{id:bonus[0].casino.id}) }}' title='{{ bonus[0].casino.casinoname }}' rel='noopener nofollow' class='btn btn-primary' target='_blank'>
+                        {% if country.name=='United Kingdom' %}PLAY{% else %}PLAY NOW{% endif %}
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,69 @@
+{% if bonus.classicblackjack >0 %}
+    <div class="casinowar-item">
+        <img src='/img/icons/blackjack.png' width="20" height="20" alt="classic blackjack">
+         {{ bonus.classicblackjack }}{% if bonus.classicblackjackb > 0 %}xb{% endif %}{% if bonus.classicblackjackd > 0  %}&d{% endif %} classic blackjack
+    </div>
+{% endif %}
+
+{% if bonus.otherblackjack >0 %}
+    <div class="casinowar-item">
+        <img src='/img/icons/other-black-jack.png' width="20" height="20" alt="other blackjack">
+    {{ bonus.otherblackjack  }}{% if bonus.otherblackjackb > 0 %}xb{% endif %}{% if bonus.otherblackjackd > 0  %}&d{% endif %} other blackjack
+    </div>
+{% endif %}
+
+{% if bonus.videopoker >0 %}
+    <div class="casinowar-item">
+        <img src='/img/icons/video-poker.png' width="20" height="20" alt="videopoker">
+         {{ bonus.videopoker }}{% if bonus.videopokerb > 0 %}xb{% endif %}{% if bonus.videopokerd > 0  %}&d{% endif %} videopoker
+    </div>
+{% endif %}
+
+{% if bonus.craps >0 %}
+    <div class="casinowar-item">
+        <img src='/img/icons/craps.png' width="20" height="20" alt="craps">
+         {{ bonus.craps }}{% if bonus.crapsb > 0 %}xb{% endif %}{% if bonus.crapsd > 0  %}&d{% endif %} craps
+    </div>
+{% endif %}
+
+{% if bonus.baccarat >0 %}
+    <div class="casinowar-item">
+        <img src='/img/icons/baccarat.png' width="20" height="20" alt="craps">
+         {{ bonus.baccarat }}{% if bonus.baccaratb > 0 %}xb{% endif %}{% if bonus.baccaratd > 0  %}&d{% endif %} baccarat
+    </div>
+{% endif %}
+
+{% if bonus.pokergames >0 %}
+    <div class="casinowar-item">
+        <img src='/img/icons/poker-games.png' width="20" height="20" alt="pokergames">
+         {{ bonus.pokergames }}{% if bonus.pokergamesb > 0 %}xb{% endif %}{% if bonus.pokergamesd > 0  %}&d{% endif %} pokergames
+    </div>
+{% endif %}
+
+{% if bonus.sicbo >0 %}
+    <div class="casinowar-item">
+        <img src='/img/icons/baccarat.png' width="20" height="20" alt="sicbo">
+        {{ bonus.sicbo }}{% if bonus.sicbob > 0 %}xb{% endif %}{% if bonus.sicbod > 0  %}&d{% endif %} sicbo
+    </div>
+{% endif %}
+
+{% if bonus.americanroulette >0 %}
+    <div class="casinowar-item">
+        <img src='/img/icons/roulette.png' width="20" height="20" alt="americanroulette">
+        {{ bonus.americanroulette }}{% if bonus.americanrouletteb > 0 %}xb{% endif %}{% if bonus.americanrouletted > 0  %}&d{% endif %} americanroulette
+    </div>
+{% endif %}
+
+{% if bonus.otherroulette >0 %}
+    <div class="casinowar-item">
+        <img src='/img/icons/other-roulette.png' width="20" height="20" alt="otherroulette">
+        {{ bonus.otherroulette }}{% if bonus.otherrouletteb > 0 %}xb{% endif %}{% if bonus.otherrouletted > 0  %}&d{% endif %} otherroulette
+    </div>
+{% endif %}
+
+{% if bonus.slots >0 %}
+    <div class="casinowar-item">
+        <img src='/img/icons/other-roulette.png' width="20" height="20" alt="slots">
+        {{ bonus.slots }}{% if bonus.slotsb > 0 %}xb{% endif %}{% if bonus.slotsd > 0 %}&d{% endif %} slots
+    </div>
+{% endif %}

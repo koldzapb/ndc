@@ -1,0 +1,140 @@
+{% extends 'base.html.twig' %}
+
+    {% block bodyheader %}
+
+        <div class="header-content">
+            <div class="container">
+                <div class="ad-line">
+                </div><!--/.ad-line-->
+                <h1 class="page-title">{{ page.heading|shortCodes }}<span class="total">{{ totalnumber }}</span></h1>
+            </div><!--/.wrap-->
+        </div><!--/#content-header-->
+
+    {% endblock %}
+
+
+
+
+
+
+    {% block main %}
+            <div class="text-holder container">
+                <a class="scroll-to-button scroll-to-link" href="#button-link-1" aria-label="Scroll to news">
+                    <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                </a>
+                <div class="page-content">{{ page.content|raw }}</div>
+            </div>
+
+            <div class="container padding-medium">
+                <span id="button-link-1"></span>
+                <div class="row">
+                    <div class="articles-holder col-md-8">
+                        <div class="row" id="news_holder_ajax">
+                            {% for singlenews in news  %}
+                                <div itemscope itemtype="http://schema.org/NewsArticle" class="article-box col-lg-6">
+                                    <meta  itemprop="image" content="{{ absolute_url(singlenews.image360) }}" />
+                                    <meta  itemprop="mainEntityOfPage" content="{{ absolute_url(path('singlenews',{slug:singlenews.slug})) }}" />
+                                    <meta  itemprop="url" content="{{ absolute_url(path('singlenews',{slug:singlenews.slug})) }}" />
+                                    <meta itemprop="datePublished" content="{{ singlenews.timeadded|date('Y-m-d') }}" />
+                                    <meta itemprop="dateModified" content="{{ singlenews.lastmodified|date('Y-m-d') }}" />
+                                    <div class="article-box-inner">
+                                        <div class="article-box-image">
+                                            <a href="{{ path('singlenews',{slug:singlenews.slug}) }}">
+                                                <img class="lazyload" src="{{asset(('img/lazy-360.png'))}}" data-original="{{ singlenews.image360 }}" alt="{{ singlenews.heading }}" width="360" height="220">
+                                            </a>
+                                        </div>
+                                        <div class="article-box-content">
+                                            <h3>
+                                                <a href="{{ path('singlenews', { slug: singlenews.slug }) }}"><span itemprop="headline">{{ singlenews.heading }}</span></a>
+                                            </h3>
+                                            <p class="article-box-date">{{ singlenews.gmdate }}</p>
+                                            {% if singlenews.author %}
+                                                <p class="article-box-author">author: <a href="{{ path('author',{"slug":singlenews.author.slug}) }}"><span itemprop="author">{{ singlenews.author.authorname }}</span></a></p>
+                                            {% endif %}
+                                            <p class="article-box-descr">{{ singlenews.introtext|raw }}</p>
+                                            <div class="d-flex justify-content-between">
+                                                <a class="read-more" href="{{ path('singlenews', { slug: singlenews.slug }) }}">Read more</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-none" itemprop="publisher" itemscope itemtype="https://schema.org/Organization" >
+                                        <div class="d-none" itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+                                            <img src="https://nodepositcasino.org/img/logo.svg"/>
+                                            <meta itemprop="url" content="https://nodepositcasino.org/img/logo.png">
+                                            <meta itemprop="width" content="400">
+                                            <meta itemprop="height" content="60">
+                                        </div>
+                                        <meta itemprop="name" content="No Deposit Casino">
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="list-data-bottom">
+                            <div class="page-load">
+                                <span class="current-no" id="news_current">10</span>/<span id="news_totalnumber">{{ totalnumber }}</span>
+                            </div>
+                            <a id="load_news_button" data-first="10" data-clicked="false" href="" onclick="return false" class="btn btn-orange-outline">Load More</a>
+                        </div>
+
+                        <div id="loading">
+                            Loading Please Wait......
+                        </div>
+
+                    </div>
+
+                    <div class="articles-sidebar col-md-4">
+                        <h3><span class="icon"></span> News Categories</h3>
+                        <ul>
+                            <li>
+                                <a href="{{ path('news') }}">All News</a>
+                            </li>
+                            {% for category in articlecategories %}
+                            <li>
+                                <a href="{{ path('newsbycategory',{'slug':category.slug}) }}">{{ category.name }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+
+                        <h3><span class="icon"></span>Top {{topcasinosforcountry|length}} Casinos in {{ country.name }}</h3>
+                        {% for casino in topcasinosforcountry %}
+                            {% set appropBonus=bonus_importance.getapropriattebonus(casino) %}
+                            <div class="top-casino-item">
+                                <div class="casino-bonus">
+                                    <p class="casino-bonus-amount">{{ appropBonus.symbol }}{{ appropBonus.maxbonusshow }}</p>
+                                    {% if appropBonus.bonustype %}<p class="casino-bonus-name">{{ appropBonus.bonustype.name }}</p>{% endif %}
+                                </div>
+                                <div class="casino-info">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="casino-rating">
+                                            <h4 class="casino-name"><a href="{{ path('casino-review',{'id':casino.id,'casinoname':casino.casinoname|replace({" ":"-","'":"" }) }) }}">{{ casino.casinoname }}</a></h4>
+                                            <p class='casino-rating-value'><span>{{ casino.averagerating }}</span>/5</p>
+                                            <div class="progress">
+                                                <span class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></span>
+                                            </div>
+                                        </div>
+                                        <div class="casino-logo">
+                                            <a href="{{ path('casino-review',{'id':casino.id,'casinoname':casino.casinoname|replace({" ":"-","'":"" }) }) }}">
+                                                <img src="{{ asset(casino.logo50) }}" title="{{ casino.casinoname }}" alt="{{ casino.casinoname }}" width="50" height="50">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="casino-links">
+                                        <div class="casino-review">
+                                            <a href="" class="btn-like tooltip-btn" onclick ="return false;" data-toggle="tooltip" data-placement="top" title="Like Casino" data-original-title="Like Casino" aria-label="Like Casino" data-casino="{{ casino.id }}"></a>
+                                            <a href="{{ '/casino-review/'~casino.id~'/'~casino.casinoname|replace({' ':'-' }) }}" class="btn-review tooltip-btn" data-toggle="tooltip" data-placement="top" title="Read Review" data-original-title="Read Review" aria-label="Read Review"></a>
+                                        </div>
+                                        <a href="{{ path('visit_casino',{'id':casino.id}) }}" title="{{ casino.casinoname }}" rel="noopener nofollow" class="btn btn-primary" target="_blank">VISIT</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        <h3><span class="icon"></span> Latest User Activities</h3>
+                        {{ liveactivities|raw }}
+
+                    </div>
+                </div>
+            </div>
+
+    {% endblock %}

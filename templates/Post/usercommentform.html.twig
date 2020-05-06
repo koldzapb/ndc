@@ -1,0 +1,15 @@
+<div class='modal-dialog-inner'>
+    <form class='post-comment-form' action='' method='post' onsubmit='return false;'>
+        <input type='hidden' name='wall_id' value=''/>
+        <h3>Post comment to {{ userreceiver.username }}</h3>
+        <div class="form-group">
+            <textarea aria-label='Comment' placeholder='Comment' name='post_comment' rows='' cols='' id='postcontent' required></textarea>
+            <div class="post-form-error form-error">Comment should not be blank</div>
+        </div>
+        <input type='submit' value='Post Comment' userid='{{ userreceiver.id }}' id='commentbutton' />
+    </form>
+</div>
+
+
+
+

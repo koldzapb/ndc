@@ -1,0 +1,8 @@
+Hi {{ user.username }},
+
+Thanks for registering!
+Please confirm your membership{% if user.newsletter %} and newsletter subscription{% endif %} by visiting link below:
+{{ host }}/accountconfirmation?username={{ user.username }}&token={{ user.token }}
+
+Regards
+The NDC Team

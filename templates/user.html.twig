@@ -1,0 +1,147 @@
+{% extends 'base.html.twig' %}
+
+
+    {% block meta_follow %}noindex, nofollow{% endblock %}
+
+
+    {% block bodyheader %}
+
+        <div class="header-content">
+            <div class="container">
+                <div class="ad-line"></div><!--/.ad-line-->
+                <div class="user-profile">
+                    <img src="{{ user.imagelocation }}" alt="{{ user.username }}" class="user-profile-image" width="160" height="160"/>
+                    <div class="user-profile-info">
+                        <h1>{{ user.username }}</h1>
+                        <ul class="user-profile-list">
+                            <li>
+                                <a class="likes-user" href="#"  onclick="return false;" data-usertobeliked="{{ user.id }}" >
+                                    <span class="btn-like"></span>
+                                    {{ user.otheruserslikes|length }}
+                                    {% if(user.otheruserslikes|length ==1) %}
+                                        {{ 'Like' }}
+                                    {% else %}
+                                        {{ 'Likes' }}
+                                    {% endif %}
+                                </a>
+                            </li>
+                            <li>
+                                <a class="comment-user scroll-to-link" href="#comments-list">
+                                    <span class="btn-comment"></span>
+                                    {{ user.receivedcomments|length }}
+                                    {% if(user.receivedcomments|length ==1) %}
+                                        {{ 'comment' }}
+                                    {% else %}
+                                        {{ 'comments' }}
+                                    {% endif %}
+                                </a><!--/.comments-->
+                            </li>
+                        </ul>
+                    </div>
+                </div><!--/.title-line-->
+                <div class="user-profile-details">
+                    <div class="dr">
+                        <span class="icon"></span>
+                        Date of Registration:<span class="text">{{ user.timejoined|date('M d,y H:m') }}</span>
+                    </div>
+                    <div class="sl">
+                        <span class="icon"></span>
+                        Submitted Likes:<span class="text">{{ casinoLikesNumber }}</span>
+                    </div>
+                    <div class="sc">
+                        <span class="icon"></span>
+                        Submitted Comments:<span class="text">{{ casinoPostsNumber }}</span>
+                    </div>
+
+                </div>
+
+
+            </div><!--/.wrap-->
+        </div><!--/#content-header-->
+    {% endblock %}
+
+
+    {% block main %}
+            <!-- START MAIN CONTENT-->
+            <div class="user-profile-content container">
+                <div class="user-profile-comments">
+                    <div class="text-center">
+                        <p class="comments-count">
+                            <span>
+                                {{ user.receivedcomments|length }}
+                                {% if(user.receivedcomments|length ==1) %}
+                                    {{ 'comment' }}
+                                {% else %}
+                                    {{ 'comments' }}
+                                {% endif %}
+                            </span>
+                        </p>
+                        {%  if not is_granted('IS_AUTHENTICATED_FULLY')  %}
+                            {% set modal = '#registerModal' %}
+                        {% else %}
+                            {% set modal = '#post-comment-form'%}
+                        {% endif %}
+                        <a href="#" data-dismiss="modal" data-toggle="modal" data-target="{{ modal }}" onclick="({url:'/usercomment?userid={{ user.id }}'});return false;"  class="btn btn-orange-outline">Post a comment</a>
+                    </div>
+
+                    <div class="user-comment-list" id="comments-list">
+                        {% for comment in comments %}
+                            <div class="user-comment-item">
+                                <a href="/user/{{ comment[0].userwhoposts.id }}/{{ comment[0].userwhoposts.username }}/" class="user-comment-image">
+                                    <img src="{{ comment[0].userwhoposts.imagelocation }}" alt="{{ comment[0].userwhoposts.username }}" width="50" height="50">
+                                </a>
+                                <div class="user-comment-content">
+                                    <a class="user-comment-username" href="/user/{{ comment[0].userwhoposts.id }}/{{ comment[0].userwhoposts.username }}">{{ comment[0].userwhoposts.username }}</a><time>{{ comment[1]|date('d/m/Y')  }}</time>
+                                    <p>{{ comment[0].content }}</p>
+                                    <div class="reply">
+                                        <a href="#" class="reply-btn"><span class="icon"></span>Reply</a>
+                                        <textarea class="reply-content" data-commentid="{{ comment[0].id }}" ></textarea>
+                                        <button class="reply-button btn btn-orange-outline btn-small" >Submit</button>
+                                    </div>
+                                    <div class="remove">
+                                        {% if(app.user.id is defined and app.user.id==comment[0].userwhoposts.id) %}
+                                            <a href="" onclick="return false;" comment="{{ comment[0].id }}">Remove</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% for reply in comment[0].replies %}
+                                    <div class="user-comment-item reply-item">
+                                        <a href="/user/{{ reply.id }}/{{ reply.user.username }}/" class="user-comment-image">
+                                            <img src="{{ reply.user.imagelocation }}" alt="{{ reply.user.username }}" width="50" height="50">
+                                        </a>
+                                        <div class="user-comment-content">
+                                            <a class="user-comment-username" href="/user/{{ reply.user.id }}/{{ reply.user.username }}">{{ reply.user.username }}</a><time>{{ reply.timeadded|date('d/m/Y')  }}</time>
+                                            <p>{{ reply.content }}</p>
+                                            <div class="remove">
+                                                {% if(app.user.id is defined and app.user.id==reply.user.id) %}
+                                                    <a href="" onclick="return false;" data-reply="{{ reply.id }}">Remove</a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div><!--/#content-->
+        <!-- END MAIN CONTENT-->
+
+        <div class="modal" id="post-comment-form" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="tclose" data-dismiss="modal"></div>
+                <div class='modal-dialog-inner'>
+                    <form class='post-comment-form' action='' method='post' onsubmit='return false;'>
+                        <input type='hidden' name='wall_id' value=''/>
+                        <h3>Post comment to {{ user.username }}</h3>
+                        <div class="form-group">
+                            <textarea aria-label='Comment' placeholder='Comment' name='post_comment' rows='' cols='' id='postcontent' required></textarea>
+                            <div class="post-form-error form-error">Comment should not be blank</div>
+                        </div>
+                        <input type='submit' value='Post Comment' userid='{{ user.id }}' id='commentbutton' class="btn btn-primary btn-shadow" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    {% endblock %}

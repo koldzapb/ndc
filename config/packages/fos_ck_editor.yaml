@@ -1,0 +1,11 @@
+fos_ck_editor:
+  default_config: ndc_config
+  configs:
+    ndc_config:
+      allowedContent: true
+      toolbar: "full"
+      filebrowserBrowseRoute: elfinder
+      filebrowserBrowseRouteParameters: []
+  toolbars:
+    items:
+        full.document: ['Source', '-', 'Templates']

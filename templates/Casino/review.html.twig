@@ -1,0 +1,521 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{meta.title|default('No Deposit Casino')}}{% endblock %}
+{% block metaDescription %}{{meta.description|default('No Deposit Casino')}}{% endblock %}
+{% block ogtitle %}{{meta.title|default('No Deposit Casino')}}{% endblock %}
+{% block ogdescription %}{{meta.description|default('No Deposit Casino')}}{% endblock %}
+{% block metakeywords %}{{meta.keywords|default('No Deposit Casino')}}{% endblock %}
+{% block bodyheader %}
+    <div class="header-content">
+    	<div class="container">
+    		<div class="ad-line">
+    			<div class="ad-container">
+    				<a href="{{ path("visit_casino",{'id':casino.id}) }}" title="{{ casino.fullcasinoname }}" rel="noopener nofollow" target="_blank">
+    				<img src="{{ asset(casino.logo105) }}" alt="{{ casino.casinoname }}" width="105" height="105" />
+    				</a>
+    			</div>
+    		</div>
+    		<!--/.ad-line-->
+    		<div class="review-header-content" id="review">
+    			<div class="review-title">
+    				<div class="review-title-holder">
+    					<a class="review-title-image" href="{{ path('visit_casino',{id:casino.id}) }}" title="{{ casino.casinoname }}" rel="noopener nofollow" target="_blank">
+    					<img src="{{ asset(casino.logo105) }}" alt="{{ casino.casinoname }}"  width="105" height="105"/>
+    					</a>
+    					<h1 class="page-title">{{ casino.casinoname }}</h1>
+    				</div>
+    			</div>
+    			<ul class="review-header-list">
+    				<li class="review-header-restrictions">
+    					{% if(casino.IsAvailableInCountry==true)%}
+    					<img src="{{country.imgsrc}}" alt="{{ country.name~' flag' }}" width="24" height="24">
+    					{% else %}
+    					<img src="{{country.imgsrc}}" style="opacity: 0.3; " alt="{{ country.name~' flag' }}" width="24" height="24">
+    					{% endif %}
+    					{% if(casino.IsAvailableInCountry==true)%}
+    					{% set p=" <span class='accepted'>accepted</span><br> Players from "~country.name~" are accepted at this Casino" %}
+    					{% else %}
+    					{% set p="<span class='not-accepted'>not accepted</span><br>Players from "~country.name~" are not accepted at this Casino" %}
+    					{% endif %}
+    					<p>{{ p|raw }}</p>
+    				</li>
+    				{% if(casino.posts|length > 0) %}
+    				<li>
+    					<a class="comments scroll-to-link" href="#button-link-3">
+        					<span class="icon"></span>
+        					<span class="text">
+                                {{ casino.posts|length }} {% if casino.posts|length > 1 %}Comments{% else %}Comment{% endif %}
+        					</span>
+    					</a><!--/.comments-->
+    				</li>
+    				{% endif %}
+    				<li>
+    					<a class="likes" href="" data-casino="{{ casino.id }}"  onclick="return false;" style="cursor: pointer;" >
+        					<span class="icon"></span>
+        					<span class="text">
+            					{% if(casino.likes|length >0) %}
+                					{{ casino.likes|length }} {% if casino.likes|length > 1 %}Likes{% else %}Like{% endif %}
+            					{% endif %}
+        					</span>
+    					</a>
+    				</li>
+    				{% if(casino.awardrank<100) %}
+    				<li>
+    					<div class="rank"><span class="icon"></span>#{{ casino.awardrank }}</div>
+    				</li>
+    				{% endif %}
+    			</ul>
+    			<div class="button-holder">
+    				<a class="btn btn-lg btn-primary btn-shadow" href="{{ path('visit_casino',{id:casino.id}) }}" title="{{ casino.casinoname }}" target="_blank" rel="noopener nofollow">play now</a>
+    				<a class="btn btn-light btn-shadow scroll-to-link" href="#post_a_comment">leave a comment</a>
+    			</div>
+    		</div>
+    		<!--/.title-line-->
+    	</div>
+    	<!--/.wrap-->
+    </div>
+    <!--/#content-header-->
+{% endblock %}
+{% block main %}
+
+    {% if bonuses|length!=0 %}
+        <div class="review-bonuses">
+        	<a class="scroll-to-button scroll-to-link" href="#button-link-1" aria-label="Scroll to bonus">
+        	<i class="fas fa-arrow-down" aria-hidden="true"></i>
+        	</a>
+        	<div class="container">
+        		{% if bonuses|length > 1 %}
+        		<h2 id="button-link-1" class="review-bonuses-h">Casino Bonuses</h2>
+        		{% endif %}
+        		{%   if bonuses|length == 1 %}
+        		<h2 id="button-link-1" class="review-bonuses-h">Casino Bonus</h2>
+        		{% endif %}
+
+
+    		    {% if(bonuses|length==1) %}
+    		        <div class="review-bonus-item single">
+        		        <div class="review-single-top">
+                    		<img class="review-bonus-img" src="{{ asset(bonuses[0].bonustype.imagelocation) }}" alt="{{ bonuses[0].bonustype.name }}" width="70" height="70">
+                    		<h3 class="review-bonus-name">{{ bonuses[0].bonustype.name }}</h3>
+        		        </div>
+                        {% if (bonuses[0].exclusive) %}
+        				    <span class="box-exclusive"><i class="fas fa-star"></i> &nbsp;Exclusive</span>
+    					{% endif %}
+    					<h4 class="review-bonus-amount">
+        					{% if bonuses[0].bonuspercent > 0 %}
+            					{{ bonuses[0].bonuspercent }}%
+        					{% elseif bonuses[0].freespins > 0 %}
+            					<span class="spins">{{ bonuses[0].freespins }} CASINO SPINS</span>
+        					{% endif %}
+        					{% if not bonuses[0].showOnlyFirstValue and bonuses[0].maxbonus > 0 %}
+            					{% if bonuses[0].bonuspercent > 0 or bonuses[0].freespins > 0 %}
+                                    <br/><span class="up-to">Up To</span>
+                                {% endif %}
+                                {% if bonuses[0].maxbonus == 0  %}
+                                    &infin;
+                                {% else %}
+                                    {{ bonuses[0].maxbonus|split('.')|first }}{{ bonuses[0].symbol }}
+                                {% endif %}
+        					{% endif %}
+        					{% if bonuses[0].tcurl|length>0 %}
+                                <a class="review-bonus-toc" href="{{ bonuses[0].tcurl }}" rel="nofollow noopener" target="_blank">T&C's Apply</a>
+                            {% endif %}
+        				</h4>
+        				<p class="review-bonus-code">
+        					{% if(bonuses[0].code!=null) %}
+            					Code: <span class="tooltip-btn tooltip-hover" data-toggle="tooltip" data-placement="top" title="Copy to Clipboard"><span class="copy-code tooltip-btn" data-toggle="tooltip" data-placement="top" title="Code copied to Clipboard" data-trigger="manual">{{ bonuses[0].code }}</span></span>
+        					{% endif %}
+        				</p>
+        				<div class= "review-bonus-description">
+        					{% if (bonuses[0].extraintable|raw|length>249) %}
+            					<div class="show-more-height">
+            						{{ bonuses[0].extraintable|raw }}
+            					</div>
+                                <a class="show-more" data-controls="" data-state="closed">SHOW MORE</a>
+            					{% else %}
+            					    {{ bonuses[0].extraintable|raw }}
+        					{% endif %}
+        				</div>
+        				<div class="text-center">
+            				<ul class="review-bonus-details">
+            					<li>
+            						<span class="title">Cashable</span>
+            						{% if(bonuses[0].cashable==1) %}
+            						    {{ 'cashable' }}
+            						{% else %}
+            						    {{ 'not cashable' }}
+            						{% endif %}
+            					</li>
+            					<li class="border-side">
+        						    <span class="title">Minimum Wagering</span>
+        						    {% if bonuses[0].casinowar>0 %}
+        							    {%   set war=bonuses[0].casinowar %}
+                                        <span class="war">
+                                            {% if bonuses[0].casinowarb==1 %}
+                                                {% set war=war~'xb' %}
+                                            {% endif %}
+                                            {% if bonuses[0].casinoward==1 %}
+                                                {% set war=war~'xd' %}
+                                            {% endif %}
+                                            {{ war }}
+        							    </span>
+        							{% endif %}
+        							{% if(bonuses[0].wrCount > 0) %}
+            							<a class="morecasinowar" status="closed" onclick="return false;">
+            								{% if(bonuses[0].wrCount > 1) %}More{% else %}Info{% endif %}
+            								<div class="casinowar">
+            									{% include 'Casino/bonus_wr_hover.html.twig' with {'bonus': bonuses[0]} %}
+            								</div>
+            							</a>
+            						{% endif %}
+            					</li>
+            					<li>
+            						<span class="title">Bonus Given</span>
+            						{% if bonuses[0].bonusgiven==1  %}
+                						{{ 'before' }}
+            						{% else %}
+                						{{ 'after'  }}
+            						{% endif %}
+            					</li>
+            				</ul>
+        				    <a href="{{ path("visit_casino",{id:casino.id}) }}" rel="noopener nofollow" class="btn btn-primary" target="_blank">CLAIM</a>
+        				</div>
+    		        </div>
+                {% else %}
+                    <div class="review-bonus-list">
+                        {% for bonus in bonuses %}
+							{% set type=bonus.bonustype %}
+                    		<div class="review-bonus-item">
+                        		<img class="review-bonus-img" src="{{ asset(type.imagelocation) }}" alt="{{ type.name }}" width="70" height="70">
+                        		<h3 class="review-bonus-name">{{ type.name }}</h3>
+                                {% if (bonus.exclusive) %}
+                				    <span class="box-exclusive"><i class="fas fa-star"></i> &nbsp;Exclusive</span>
+            					{% endif %}
+            					<h4 class="review-bonus-amount">
+                					{% if bonus.bonuspercent > 0 %}
+                    					{{ bonus.bonuspercent }}%
+                					{% elseif bonus.freespins > 0 %}
+                    					<span class="spins">{{ bonus.freespins }} CASINO SPINS</span>
+                					{% endif %}
+                					{% if not bonus.showOnlyFirstValue and bonus.maxbonus > 0 %}
+                    					{% if bonus.bonuspercent > 0 or bonus.freespins > 0 %}
+                                            <br/><span class="up-to">Up To</span>
+                                        {% endif %}
+                                        {% if bonus.maxbonus == 0  %}
+                                            &infin;
+                                        {% else %}
+                                            {{ bonus.maxbonus|split('.')|first }}{{ bonus.symbol }}
+                                        {% endif %}
+                					{% endif %}
+                					{% if bonus.tcurl|length>0 %}
+                                        <a class="review-bonus-toc" href="{{ bonus.tcurl }}" rel="nofollow noopener" target="_blank">T&C's Apply</a>
+                                    {% else %}
+                                        <span class="review-bonus-toc"></span>
+                                    {% endif %}
+                				</h4>
+                				<p class="review-bonus-code">
+                					{% if(bonus.code!=null) %}
+                    					Code: <span class="tooltip-btn tooltip-hover" data-toggle="tooltip" data-placement="top" title="Copy to Clipboard"><span class="copy-code tooltip-btn" data-toggle="tooltip" data-placement="top" title="Code copied to Clipboard" data-trigger="manual">{{ bonus.code }}</span></span>
+                					{% endif %}
+                				</p>
+                				<div class= "review-bonus-description">
+                					{% if (bonus.extraintable|raw|length>249) %}
+                    					<div class="show-more-height">
+                    						{{ bonus.extraintable|raw }}
+                    					</div>
+                                        <a class="show-more" data-controls="" data-state="closed">SHOW MORE</a>
+                    					{% else %}
+                    					    {{ bonus.extraintable|raw }}
+                					{% endif %}
+                				</div>
+                				<ul class="review-bonus-details">
+                					<li>
+                						<span class="title">Cashable</span>
+                						{% if(bonus.cashable==1) %}
+                						    {{ 'cashable' }}
+                						{% else %}
+                						    {{ 'not cashable' }}
+                						{% endif %}
+                					</li>
+                					<li class="border-side">
+            						    <span class="title">Minimum Wagering</span>
+            						    {% if bonus.casinowar>0 %}
+            							    {%   set war=bonus.casinowar %}
+                                            <span class="war">
+                                                {% if bonus.casinowarb==1 %}
+                                                    {% set war=war~'xb' %}
+                                                {% endif %}
+                                                {% if bonus.casinoward==1 %}
+                                                    {% set war=war~'xd' %}
+                                                {% endif %}
+                                                {{ war }}
+            							    </span>
+            							{% endif %}
+            							{% if(bonus.wrCount > 0) %}
+                							<a class="morecasinowar" status="closed" onclick="return false;">
+                								{% if(bonus.wrCount > 1) %}More{% else %}Info{% endif %}
+                								<div class="casinowar">
+                									{% include 'Casino/bonus_wr_hover.html.twig' with {'bonus': bonus} %}
+                								</div>
+                							</a>
+                                        {% endif %}
+                					</li>
+                					<li>
+                						<span class="title">Bonus Given</span>
+                						{% if bonus.bonusgiven==1  %}
+                    						{{ 'before' }}
+                						{% else %}
+                    						{{ 'after'  }}
+                						{% endif %}
+                					</li>
+                				</ul>
+                				    <a href="{{ path("visit_casino",{id:casino.id}) }}" rel="noopener nofollow" class="btn btn-primary" target="_blank">CLAIM</a>
+                		    </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+        	</div>
+        </div>
+    {% endif %}
+
+    <div class="main-review">
+    	<!--MAIN REVIEW-->
+    	<a class="scroll-to-button scroll-to-link" href="#button-link-2" aria-label="Scroll to review">
+    	    <i class="fas fa-arrow-down" aria-hidden="true"></i>
+    	</a>
+    	<div class="container">
+    		<h2 class="h1">Playing at {{ casino.casinoname }}</h2>
+    		<div class="row">
+    			<div class="main-review-content col-md-12" id="button-link-2">
+    				<div class="button-holder">
+    					<a class="btn review-like btn-primary btn-shadow" data-casino="{{ casino.id }}" onclick="return false;"  href="#">
+        					<span class="icon"></span>
+    						{% if(casino.likedbyuser) %}
+    						    LIKED
+    						{% else %}
+    						    LIKE THIS CASINO
+    						{% endif %}
+    					</a>
+    					<a class="btn review-comment btn-shadow scroll-to-link" href="#button-link-3">
+        					<span class="icon"></span>
+    						COMMENT CASINO
+    					</a>
+    				</div>
+					<div class="main-review-slideshow">
+						{% set screen=0 %}
+						{% set big="" %}
+						{% set thumb="" %}
+						{% for screenshot in casino.screenshots %}
+						{% set screen=screen+1 %}
+						{% if(screen<=5) %}
+						{% set big=big~"
+						<a href='"~asset(screenshot.url)~"' data-lightbox='roadtrip'><img src='"~asset(screenshot.sliderimagesource)~"' alt='"~screenshot.filename~"' aria-label='"~screenshot.filename~"'></a>
+						" %}
+						{% set thumb=thumb~"
+						<img src='"~asset(screenshot.thumbimagesource)~"' alt='"~screenshot.filename~"' >
+						" %}
+						{% endif %}
+						{% endfor %}
+						<div class="slideshow-review">
+							<div class="slider-big-img">
+								{{ big|raw }}
+							</div>
+							<div class="slider-thumb-nav">
+								{{ thumb|raw }}
+							</div>
+						</div>
+					</div>
+					<!--/.slideshow-->
+					<div class="main-review-text show-more-height">
+    					{% if(casino.reviewtext|length>0) %}
+    					    {{ reviewtext|raw }}
+    					{% else  %}
+    					    <p>{{ 'Review coming soon.' }}</p>
+    					{% endif %}
+					</div>
+					{% if(casino.reviewtext|length>0) %}
+                        <a href="#" class="show-more d-block d-md-none" data-controls="" data-state="closed">SHOW MORE</a>
+                    {% endif %}
+					<div class="powered-by">
+					    <span>Powered by:</span>
+						{% if not casino.dontShowFactualInformation %}
+							{% set image=0 %}
+							{% for software in softwares %}
+								{% if(software.availableInCountry==1) %}
+									{% set opacity=1 %}
+								{% else %}
+									{% set opacity=0.3 %}
+								{% endif %}
+								{% set image=image+1 %}
+								<img class="lazyload" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQIHWO4/+INAAVdArRD1D4LAAAAAElFTkSuQmCC" data-original="{{ asset(software.softwarelogo) }}" alt="{{ software.title }}" title="{{ software.title }}" width="40" height="24" style="opacity:{{ opacity }};">
+								{% if ((image%5)==0)%}
+									{{ '<br>' }}
+								{% endif %}
+							{% endfor %}
+							{% else %}
+								<p>Please visit their website for more details.</p>
+						{% endif %}
+					</div>
+    			</div>
+    		</div>
+    		<!--/.row-->
+    		<div class="row main-review-bottom">
+    			<div class="col-md-4">
+    				<h3>Banking</h3>
+					{% if not casino.dontShowFactualInformation %}
+    				<p>
+    					{{ casino.casinoname }} supports banking methods  for deposits and withdrawals for
+    					{% for banking in casino.bankingoptions %}
+    					<a href="{{ path('banking', { id: banking.banking.id, casinoname: banking.banking.slug }) }}">{{ banking.banking.name }}</a>{% if not loop.last %}, {% endif %}
+    					{% endfor %}
+    				</p>
+    				{% for banking in casino.bankingoptions %}
+    				    <img class="lazyload" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQIHWO4/+INAAVdArRD1D4LAAAAAElFTkSuQmCC"
+     data-original="{{ asset(banking.banking.imagelocation) }}" alt="{{ banking.banking.name }}" width="40" height="24" />
+    				{% endfor %}
+					{% else %}
+					<p>Please visit their website for more details.</p>
+					{% endif %}
+    			</div>
+    			<div class="col-md-4">
+    				<h3>Currencies</h3>
+					{% if not casino.dontShowFactualInformation %}
+    				<p>
+    					{{casino.casinoname }} accepts the following currencies:
+    					{% for currency in casino.currencies %}
+    					<a href="{{ path('currency', { id: currency.id, name: currency.slug }) }}">{{ currency.name }}</a>{% if not loop.last %}, {% endif %}
+    					{% endfor %}
+    				</p>
+					{% for currency in casino.currencies %}
+					    <img class="lazyload" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQIHWO4/+INAAVdArRD1D4LAAAAAElFTkSuQmCC"
+     data-original="{{ asset(currency.imagelocation) }}" alt="{{ casino.casinoname ~ " accepts " ~currency.name }}" title="{{ casino.casinoname ~" accepts "~currency.name }}" width="16" height="11" />
+					{% endfor %}
+					{% else %}
+						<p>Please visit their website for more details.</p>
+					{% endif %}
+    			</div>
+    			<div class="col-md-4">
+    				<h3>Languages</h3>
+					{% if not casino.dontShowFactualInformation %}
+    				<p>
+    					{{ casino.casinoname }} supports the following languages:
+    					{%for language in casino.languages  %}
+    					<a href="{{ path('language', { id: language.id, name: language.slug }) }}">{{ language.name }}</a>{% if not loop.last %}, {% endif %}
+    					{% endfor %}
+    				</p>
+					{%for language in casino.languages  %}
+    					<img class="lazyload" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQIHWO4/+INAAVdArRD1D4LAAAAAElFTkSuQmCC"
+     data-original="{{ asset(language.imagelocation) }}"  alt="{{ language.name }}"  width="16" height="11" />
+					{% endfor %}
+					{% else %}
+						<p>Please visit their website for more details.</p>
+					{% endif %}
+    			</div>
+    		</div>
+    		<!--END MAIN REVIEW-->
+    	</div>
+    	<!--/.wrap-->
+    </div>
+    <!--/#main review-->
+
+	<div class="main-review-comments">
+		<a class="scroll-to-button scroll-to-link" href="#button-link-3" aria-label="Scroll to feedback">
+		    <i class="fas fa-arrow-down" aria-hidden="true"></i>
+		</a>
+		<div class="container">
+    		<div class="text-center">
+    			<h2 class="h1" id="button-link-3">Real Players Feedback</h2>
+    			{% if (casino.posts|length > 0) %}
+    			<p class="review-comments-no"><span class="icon"></span>{{ (casino.posts)|length }} {% if casino.posts|length ==1 %}Comment{% else %}Comments{% endif %}</p>
+    		</div>
+			{% endif %}
+			<section class="box-comments review-comments">
+				{{ likesandcomments|raw }}
+			</section>
+			{%  if not is_granted('IS_AUTHENTICATED_FULLY')  %}
+			    {% set modal = '#registerModal' %}
+			{% else %}
+			    {% set modal = '#post-form-modal'%}
+            {% endif %}
+
+			{% if totalnumber > 10 %}
+    			<div class="list-data-buttons text-center mb-0">
+    				<a href="#" class="btn btn-orange-outline" id="more_activities_cas" data-first="10" data-casinoid="{{ casino.id }}" data-total="{{ totalnumber }}" onclick="return false;">
+    					More Activities
+    				</a>
+    				<a href="#" class="btn btn-orange-outline" id="all_activities_cas" data-first="10" onclick="return false;">
+    					All Activities
+    				</a>
+    			</div>
+			{% endif %}
+			<div class="text-center mt-4">
+				<a href="#" id="post_a_comment" data-toggle="modal" data-target="{{ modal }}"  class="btn btn-orange-outline" onclick="return false;">Post a comment</a>
+			</div>
+		</div>
+		<!--/.wrap-->
+	</div>
+	<!--/.comments-->
+    <!--/#content-->
+    <div class="modal" id="post-form-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    	<div class="modal-dialog" role="document">
+    		<div class="tclose" data-dismiss="modal"></div>
+    		<div class='modal-dialog-inner'>
+    			<form class='post-comment-form' action='' method='post' onsubmit='return false;'>
+    				<h3>Post comment to {{ casino.casinoname }}
+    					<a href=''>Post</a>
+    				</h3>
+    				<div class="form-group">
+        				<textarea aria-label='Comment' placeholder='Comment' name='post_comment' rows='' cols='' id='postcontent' required ></textarea>
+        				<div class="post-form-error form-error">Comment can't be blank</div>
+    				</div>
+    				<input type='submit' value='Post Comment' casinoid='{{ casino.id }}' id='postbutton' class="btn btn-primary btn-shadow" />
+    			</form>
+    		</div>
+    	</div>
+    </div>
+    <!-- END NEW -->
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+    	var _sf_startpt=(new Date()).getTime()
+    </script>
+     <script type="application/ld+json">
+    {
+      "@context": "http://schema.org/",
+      "@type": "Review",
+      "itemReviewed": {
+        "@type": "Organization",
+        "name": "{{ casino.casinoname }}",
+        "description": "{{ meta.description|default('No Deposit Casino') }}",
+        "image": "{{ absolute_url(asset(casino.logo105)) }}"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "No Deposit Casino",
+        "url": "https://nodepositcasino.org/",
+        "logo": "https://nodepositcasino.org/img/logo.png"
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "{{ casino.averagerating }}",
+        "bestRating": "5",
+        "worstRating": "0"
+      }
+    }
+    </script>
+{% endblock %}
+
+{% block mainSchemaParameters %}
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "WebPage",
+        "name": "{{ meta.title|default('No Deposit Casino') }}",
+        "description": "{{ meta.description|default('No Deposit Casino') }}",
+        "publisher": {
+            "@type": "Organization",
+            "name": "No Deposit Casino"
+        }
+    }
+    </script>
+{% endblock %}
