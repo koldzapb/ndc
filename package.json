@@ -18,7 +18,7 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.4.1",
-        "ajv": "^6.5.4",
+        "ajv": "^6.12.3",
         "bootstrap": "^4.4.1",
         "jquery-lazyload": "^1.9.7",
         "lightbox2": "^2.10.0",
